@@ -1,0 +1,44 @@
+.form-signin{
+    max-width: 330px;
+    text-align: center;
+    margin: auto;
+}
+.form-contact{
+    max-width: 530px;
+    text-align: center;
+    margin: auto;
+}
+.feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14rem;
+    height: 14rem;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    border-radius: .75rem;
+}
+.card-image{
+    width: 100%;
+}
+.message-textarea{
+    min-height: 200px!important;
+}
+.position-sticky{
+    position: sticky;
+    top:0;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+button > * {
+    pointer-events: none;
+  }
