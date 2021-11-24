@@ -1,0 +1,18 @@
+{
+    "name": "damiankuras/building-market",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "DamianKuras",
+            "email": "damian_kuras@outlook.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.4"
+    }
+}
