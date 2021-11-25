@@ -77,11 +77,10 @@ use app\base\Application;
 
 
     </header>
-    <main class="min-vh-75">
-        <!-- {{flashMessages}} -->
+    <main class="min-vh-75 mt-5">
         <div>
             <?php if (Application::$app->session->getFlash('succes')) : ?>
-                <div class="flash-succes">
+                <div class="alert alert-success" role="alert">
                     <?php echo Application::$app->session->getFlash('succes') ?>
                 </div>
             <?php endif; ?>
@@ -93,15 +92,14 @@ use app\base\Application;
     <footer class="footer py-3 bg-dark mt-auto">
         <div class="container">
             <div class="d-flex justify-content-between">
-                <div class='nav'>
-                    <a class="btn btn-outline-light me-2" href="#">About us</a>
-                    <a class="btn btn-outline-light me-2" href="#">Shipment</a>
-                    <a class="btn btn-outline-light me-2" href="#">Returns</a>
-                </div>
+                <ul class='list-unstyled text-small'>
+                    <li><a class="link-secondary" href="#">About us</a></li>
+                    <li><a class="link-secondary" href="#">Shipment</a></li>
+                    <li><a class="link-secondary" href="#">Returns</a></li>
+
+                </ul>
                 <span class="text-white">© Building Market created by Damian Kuraś</span>
             </div>
-
-
 
         </div>
     </footer>

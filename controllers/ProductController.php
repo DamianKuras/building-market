@@ -26,14 +26,4 @@ class ProductController extends Controller
         ]);
     }
 
-    public function showPartialy(int $amount, string $where)
-    {
-        $product =  new Product();
-
-        $producstModels = $product->Get(20);
-
-        return $this->render('partials/ProductPartial', [
-            'model' => $producstModels,
-        ]);
-    }
 }

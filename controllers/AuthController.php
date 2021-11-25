@@ -27,7 +27,12 @@ class AuthController extends Controller
         if ($request->isPost()) {
             $loginForm->loadData($request->getBody());
             if ($loginForm->validate() && $loginForm->login()) {
-                $response->redirect('/');
+                if(isset($_SESSION['rdrurl'])){
+                    $response->redirect($_SESSION['rdrurl']);
+                }
+                else{
+                    $response->redirect('/');
+                }
                 return;
             }
         }
@@ -42,7 +47,12 @@ class AuthController extends Controller
             $user->loadData($request->getBody());
             if ($user->validate() && $user->save()) {
                 Application::$app->session->setFlash('succes', 'Dziękujemy za rejestracje');
-                Application::$app->response->redirect('/');
+                if(isset($_SESSION['rdrurl'])){
+                    $response->redirect($_SESSION['rdrurl']);
+                }
+                else{
+                    $response->redirect('/');
+                }
                 exit;
             }
 
@@ -58,7 +68,12 @@ class AuthController extends Controller
     public function logout(Request $request, Response $response)
     {
         Application::$app->logout();
-        $response->redirect('/');
+        if(isset($_SESSION['rdrurl'])){
+            $response->redirect($_SESSION['rdrurl']);
+        }
+        else{
+            $response->redirect('/');
+        }
     }
 
     public function cart(Request $request)
@@ -110,24 +125,26 @@ class AuthController extends Controller
     {
         $cart = new Cart();
         $cart->loadData($request->getBody());
-        //var_dump($cart);
         $cart->user_id = Application::$app->user->id;
         $product = new Product;
         $productInfo = $product->getById($cart->product_id);
         if (!$productInfo->verifyQuantity($cart->quantity)) {
-            return 'nie mamy takiej ilośći produktu wybierz mniejsza ilość';
+            return 'Sorry we dont have this many.';
         }
         if ($cart->itemAlreadyInCart(Application::$app->user->id, $cart->product_id)) {
-            $cart->addToExisting(Application::$app->user->id, $cart->product_id, $cart->quantity);
+            $cart->addQuantityToExisting(Application::$app->user->id, $cart->product_id, $cart->quantity);
             $productInfo->removeFromStock($cart->quantity);
-            return 'dołożono do koszyka wybraną ilość produktu';
+            return 'Item already in cart. Added extra amount to cart';
         }
         if ($cart->validate() && $cart->save()) {
             $productInfo->removeFromStock($cart->quantity);
-            return 'pomyślnie dodano do koszyka';
+            return 'Succesfully added to cart';
         } else {
-            return 'najpierw się zaloguj';
+            return 'U need to sing up to add products to cart';
         }
+    }
+    public function carrSetProductQuantity(Request $request){
+        
     }
 
     public function shopingHistory()

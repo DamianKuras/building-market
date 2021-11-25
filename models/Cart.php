@@ -49,11 +49,14 @@ class Cart extends DbModel
             return false;
         }
     }
-    public function addToExisting(int $user_id, int $product_id, int $added_quantity)
+    public function addQuantityToExisting(int $user_id, int $product_id, int $added_quantity)
     {
 
         $item = Cart::findOne(['user_id' => $user_id, 'product_id' => $product_id]);
         $newQuantityValue = $item->quantity + $added_quantity;
         Cart::update(['user_id' => $user_id, 'product_id' => $product_id], ['quantity' => $newQuantityValue]);
+    }
+    public function setQuantityOfProduct(int $user_id,int $product_id, int $quantity){
+        Cart::update(['user_id' => $user_id, 'product_id' => $product_id], ['quantity' => $quantity]);
     }
 }

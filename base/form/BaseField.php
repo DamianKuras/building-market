@@ -18,7 +18,7 @@ abstract class BaseField
     {
         return sprintf(
             '
-        <div class="form-floating">
+        <div class="form-floating mb-2">
             %s
             <label for="floatingInput">%s:</label>
             

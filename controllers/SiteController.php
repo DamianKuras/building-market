@@ -14,9 +14,9 @@ class SiteController extends Controller
     public function home()
     {
         $products = new Product();
-        $productsModels = $products->getAmount(10);
+        $onSale = $products->getAmount(10);
         return $this->render('home', [
-            'onSales' => $productsModels[0],
+            'onSales' => $onSale[0],
         ]);
     }
     
@@ -36,7 +36,7 @@ class SiteController extends Controller
         if ($request->isPost()) {
             $contact->loadData($request->getBody());
             if ($contact->validate() && $contact->send()) {
-                Application::$app->session->setFlash('succes', 'Thank you for your answer, we will answer soon');
+                Application::$app->session->setFlash('succes', 'Thank you for your message, we will answer soon');
                 return $response->redirect('/contact');
             }
         }

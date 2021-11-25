@@ -1,38 +1,25 @@
 <?php
-
 use app\base\Application;
-
-$this->title = 'Produkty';
+$_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
+$this->title = 'Products';
 ?>
-<h1>Produkty</h1>
 
-<div class="product-cards">
-<?php foreach ($products as $model) {?>
-    <div class="product-card"> 
-        <div class="product-image">
-            <img src="<?php echo $model['imageLink'] ?>" alt="image"/>
-        </div>
-        <div>
-            <div class="product-card-property">
-                <p> Nazwa Produktu:</p>
-                <p> <?php echo $model['name'] ?></p>
-            </div>
-            <div class="product-card-property">
-                <p> Kategoria:</p>
-                <p> <?php echo $model['category'] ?></p>
-            </div>
-            <div class="product-card-property">
-                <p> Marka:</p>
-                <p> <?php echo $model['brand'] ?></p>
-            </div>
-            <div class="product-card-property">
-                <p> Cena: </p>
-                <p> <?php echo $model['price']?> zł</p>
+<h1 class="mt-5">Products: </h1>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-2 mt-2">
+
+    <?php foreach ($products as $model) { ?>
+        <div class="col">
+            <div class="card h-100">
+                <img class="card-img-top h-100" src="<?php echo $model['imageLink'] ?>" alt="image" />
+                <div class="card-body">
+                    <h3 class="card-title"> <?php echo $model['name'] ?></h3>
+                    <p> <?php echo $model['category'] ?></p>
+                    <p> <?php echo $model['brand'] ?></p>
+                    <p> <?php echo $model['price'] ?>$</p>
+                    <a class="btn btn-outline-secondary " href="/product?id=<?php echo $model['id'] ?>">More Info</a>
+                </div>
+
             </div>
         </div>
-        <div class="product-card-link">
-            <a href="/product?id=<?php echo $model['id']?>" >More Info</a>
-        </div>
-    </div>
-<?php } ?>
+    <?php } ?>
 </div>
