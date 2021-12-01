@@ -25,5 +25,26 @@ class ProductController extends Controller
             'model' => $productModel
         ]);
     }
+    public function products()
+    {
+        $products = new Product();
+        $productsModels = $products->getAll();
+        return $this->render('products', [
+            'products' =>  $productsModels,
+        ]);
+    }
+    public function searchProdcuts(Request $request,Response $response){
 
+        $body=$request->getBody();
+        if(!array_key_exists('searchText',$body) || $body['searchText']===""){
+            return $response->redirect('/products');
+        }
+        $product= new Product();
+
+        $productsModels= $product->searchAllProductsWithText($body['searchText']);
+
+        return $this->render('products',[
+            'products'=>$productsModels,
+        ]);
+    }
 }
