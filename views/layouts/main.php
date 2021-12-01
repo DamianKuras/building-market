@@ -35,13 +35,16 @@ use app\base\Application;
                         <a class="nav-link px-2 text-white" href="/contact">Contact</a>
                     </li>
                 </ul>
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+
+
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="/searchProducts" method="POST">
                     <div class="input-group">
-                        <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
-                        <button type="button" class="btn btn-primary">
+                        <input type="search" name="searchText" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+                        <button type="submit" class="btn btn-primary">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
+
                 </form>
                 <div class="text-end">
                     <!-- {{login}} -->

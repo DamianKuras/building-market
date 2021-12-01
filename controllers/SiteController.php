@@ -20,14 +20,7 @@ class SiteController extends Controller
         ]);
     }
     
-    public function products()
-    {
-        $products = new Product();
-        $productsModels = $products->getAll();
-        return $this->render('products', [
-            'products' =>  $productsModels,
-        ]);
-    }
+
     public function contact(Request $request, Response $response)
     {
 
