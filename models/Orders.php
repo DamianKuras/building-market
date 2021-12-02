@@ -18,7 +18,10 @@ class Orders extends DbModel
     public int $user_id = 0;
     public int $status = 0;
     public string $time;
-    public int $total = 0;
+    public int $shippingCost=0;
+    public int $totalProductsCost=0;
+    public int $totalIncludingTaxes = 0;
+
     public function rules(): array
     {
         return [
@@ -26,7 +29,9 @@ class Orders extends DbModel
             'user_id' => [self::RULE_REQUIRED],
             'status' => [self::RULE_REQUIRED],
             'time' => [self::RULE_REQUIRED],
-            'total' => [self::RULE_REQUIRED],
+            'shippingDay' =>[self::RULE_REQUIRED],
+            'shippingCost' => [self::RULE_REQUIRED],
+            'totalProductsCost' => [self::RULE_REQUIRED],
         ];
     }
     public function labels(): array
@@ -46,19 +51,26 @@ class Orders extends DbModel
     }
     public function attributes(): array
     {
-        return ['id', 'user_id', 'status', 'time', 'total'];
+        return ['id', 'user_id', 'status', 'time','shippingDay' ,'shippingCost','totalProductsCost'];
     }
-    public function markAsSended()
+    public function changeStatusToSended()
     {
         parent::update(['id' => $this->id], ['status' => self::STATUS_SENDED]);
     }
-    public function getStatusLabel(int $code)
+    public function changeStatusToConfirmed(){
+        parent::update(['id'=>$this->id],['status'=>self::STATUS_CONFIRMED]);
+    }
+    public static function getStatusLabel(int $code)
     {
-        if ($code == 0) {
-            return 'Oczekujące';
+        if ($code == self::STATUS_PENDING) {
+            return 'In progress';
         }
-        if ($code == 2) {
-            return 'Wysłane';
+        if($code == self::STATUS_CONFIRMED){
+            return 'Confirmed';
         }
+        if ($code == self::STATUS_SENDED) {
+            return 'Send';
+        }
+       
     }
 }

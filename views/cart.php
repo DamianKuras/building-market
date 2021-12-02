@@ -6,7 +6,7 @@ $this->title = 'Cart';
     <div class="col-lg-8">
         <div class="mb-3">
             <div class="pt-4 wish-list">
-                <h5 class="mb-4">Cart (<span>2</span> items)</h5>
+                <h5 class="mb-4">Cart (<span><?php echo $cartItemsCount ?></span> items)</h5>
                 <?php foreach ($orderedItemsModels as $model) { ?>
                     <div class="row mb-4">
                         <div class="col-md-5 col-lg-3 col-xl-3">
@@ -27,6 +27,8 @@ $this->title = 'Cart';
                                             <button class="btn btn-secondary" onclick="decrementQuantity()"><i class="fas fa-minus"></i></button>
                                             <input class="form-control" min="0" id="quanitity" name="quantity" value="<?php echo $model['quantity'] ?>" type="number">
                                             <button class="btn btn-secondary" onclick="incrementQuantity()"><i class="fas fa-plus"></i></button>
+                                            <p class="mb-0">Price for one: <span><strong id="summary"><?php echo $model['price'] ?><p>$</p></strong></span></p class="mb-0">
+                                            <p class="mb-0">Total: <span><strong id="totalForProduct">$</strong></span></p class="mb-0">
                                         </div>
                                     </div>
                                 </div>
@@ -34,7 +36,6 @@ $this->title = 'Cart';
                                     <div>
                                         <a href="/cart/remove?product_id=<?php echo $model['product_id'] ?>" class="btn btn-danger"><i class="fas fa-trash-alt mr-1"></i> Remove item </a>
                                     </div>
-                                    <p class="mb-0"><span><strong id="summary">Price each: $17.99</strong></span></p class="mb-0">
                                 </div>
                             </div>
                         </div>
@@ -60,12 +61,12 @@ $this->title = 'Cart';
         <div class="mb-3 position-sticky">
             <div class="pt-4">
 
-                <h5 class="mb-3">The total amount of</h5>
+                <h5 class="mb-3">The total price of</h5>
 
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                         Products:
-                        <span>$25.98</span>
+                        <span><strong id="productsPrice"></strong></span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                         Shipping
@@ -78,7 +79,7 @@ $this->title = 'Cart';
                                 <p class="mb-0">(including taxes)</p>
                             </strong>
                         </div>
-                        <span><strong>$53.98</strong></span>
+                        <span><strong id="total"></strong></span>
                     </li>
                 </ul>
                 <a class="btn btn-primary" href="./checkout">go to checkout</a>
@@ -92,11 +93,12 @@ $this->title = 'Cart';
         <p>Not a real shop. Website created to learn more about programming. </p>
         <button class="btn btn-primary" type="submit" value="Submit">Make Order</button>
         <?php app\base\form\Form::end() ?>
-    </div> -->
+    </div> -->  
     <script>
         function incrementQuantity() {
-            var current = parseInt( event.currentTarget.parentElement.children[1].value);
+            var current = parseInt(event.currentTarget.parentElement.children[1].value);
             event.currentTarget.parentElement.children[1].value = current + 1;
+
         }
 
         function decrementQuantity() {
@@ -104,6 +106,15 @@ $this->title = 'Cart';
             if (current - 1 > 0) {
                 event.currentTarget.parentElement.children[1].value = current - 1;
             }
+
+        }
+
+        function handleProductQuantityChange(elem) {
+            
+        }
+
+        function calculateTotalProductPrice() {
+
         }
     </script>
 </div>

@@ -96,7 +96,7 @@ class AuthController extends Controller
                 $cart->removeFromCart(Application::$app->user->id,$item['product_id']);
             }
 
-            Application::$app->session->setFlash('succes', 'Dziękujemy za zakup produktów');
+            Application::$app->session->setFlash('succes', 'Thank you for buying producst');
             Application::$app->response->redirect('/');
             exit;
         }
@@ -105,11 +105,13 @@ class AuthController extends Controller
         foreach ($cartItems as $item) {
             $product = new Product();
             $productDetails = $product->getById($item['product_id']);
-            $displayModel = ['name' => $productDetails->name, 'brand' => $productDetails->brand, 'imageLink' => $productDetails->imageLink, 'quantity' => $item['quantity'], 'product_id' => $item['product_id']];
+            $displayModel = ['name' => $productDetails->name, 'brand' => $productDetails->brand, 'imageLink' => $productDetails->imageLink, 'quantity' => $item['quantity'] ,'product_id' => $item['product_id'], 'price'=>$productDetails->price];
             $orderedItemsModels[] = $displayModel;
         }
+        $cartItemsCount=count($cartItems);
 
         return $this->render('cart', [
+            'cartItemsCount'=> $cartItemsCount,
             'cartItems' => $cartItems,
             'orderedItemsModels' => $orderedItemsModels
         ]);
@@ -175,8 +177,10 @@ class AuthController extends Controller
             $displayModel = ['name' => $productDetails->name, 'brand' => $productDetails->brand, 'imageLink' => $productDetails->imageLink, 'quantity' => $item['quantity'], 'id' => $order->id];
             $orderedItemsModels[] = $displayModel;
         }
+        $orderItemsCount= count($orderItems);
 
         return $this->render('Order', [
+            'orderItemsCount' => $orderItemsCount,
             'order' => $orderDetails,
             'orderedItemsModels' => $orderedItemsModels
         ]);
