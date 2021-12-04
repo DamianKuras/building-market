@@ -38,7 +38,7 @@ $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
     <hr>
     <p>Avalible: <?php echo $model->quantityInStock ?></p>
     <div class="row">
-      <div class="input-group col-lg m-2">
+      <div class="input-group col-lg m-2 ">
         <button class="btn btn-secondary" onclick="decrementQuantity()"><i class="fas fa-minus"></i></button>
         <input class="form-control " type="number" id="quantity" min="0" max="<?php echo $model->quantityInStock ?>" value="1" class="product-add-input" />
         <button class="btn btn-secondary" onclick="incrementQuantity()"><i class="fas fa-plus"></i></button>

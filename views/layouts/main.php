@@ -81,7 +81,7 @@ use app\base\Application;
 
     </header>
     <main class="min-vh-75 mt-5">
-        <div>
+        <div class="container">
             <?php if (Application::$app->session->getFlash('succes')) : ?>
                 <div class="alert alert-success" role="alert">
                     <?php echo Application::$app->session->getFlash('succes') ?>
