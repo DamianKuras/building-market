@@ -16,7 +16,7 @@ class Product extends DbModel
     const RUNNING_LOW = 2;
     public int $id = 0;
     public string $name = '';
-    public int $price = 0;
+    public float $price = 0;
     public string $category = '';
     public string $imageLink = '';
     public string $brand = '';
@@ -81,6 +81,11 @@ class Product extends DbModel
             throw new ProductNotFoundException();
         }
         return $products;
+    }
+    public function getPrice(int $id){
+        $product = new Product();
+        $product->getById($id);
+        return $product->price;
     }
     public function getStockQuantity(int $id)
     {

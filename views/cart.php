@@ -22,14 +22,15 @@ $this->title = 'Cart';
                                         <p class="mb-3 text-muted text-uppercase small"><?php echo $model['brand'] ?></p>
 
                                     </div>
-                                    <div class="w-25">
+                                    <div class="w-50">
                                         <div class="input-group">
                                             <button class="btn btn-secondary" onclick="decrementQuantity()"><i class="fas fa-minus"></i></button>
-                                            <input class="form-control" min="0" id="quanitity" name="quantity" value="<?php echo $model['quantity'] ?>" type="number">
+                                            <input class="form-control" min="0" max=<?php echo $model['quantityInStock'] ?> id="quanitity" name="quantity" value="<?php echo $model['quantity'] ?>" type="number" onchange="QuantityChange()">
                                             <button class="btn btn-secondary" onclick="incrementQuantity()"><i class="fas fa-plus"></i></button>
-                                            <p class="mb-0">Price for one: <span><strong id="summary"><?php echo $model['price'] ?><p>$</p></strong></span></p class="mb-0">
-                                            <p class="mb-0">Total: <span><strong id="totalForProduct">$</strong></span></p class="mb-0">
                                         </div>
+
+                                        <p class="mb-0">Price for one: <span><strong id="summary"><span><?php echo $model['price'] ?></span> $</strong></span></p class="mb-0">
+                                        <p class="mb-0">Total: <span><strong><span class="productTotal"><?php echo number_format($model['price'] * $model['quantity'], 2) ?></span>$</strong></span></p class="mb-0">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
@@ -79,7 +80,7 @@ $this->title = 'Cart';
                                 <p class="mb-0">(including taxes)</p>
                             </strong>
                         </div>
-                        <span><strong id="total"></strong></span>
+                        <span><strong><span id="totalPrice"></span> $</strong></span>
                     </li>
                 </ul>
                 <a class="btn btn-primary" href="./checkout">go to checkout</a>
@@ -87,17 +88,23 @@ $this->title = 'Cart';
         </div>
     </div>
 
-    <!-- <div class="mb-5">
+    <div class="mb-5">
         <?php $form = app\base\form\Form::begin('', "post") ?>
         <h3>Payment</h3>
         <p>Not a real shop. Website created to learn more about programming. </p>
         <button class="btn btn-primary" type="submit" value="Submit">Make Order</button>
         <?php app\base\form\Form::end() ?>
-    </div> -->  
+    </div>
     <script>
+        window.onload = handleProductQuantityChange;
+
         function incrementQuantity() {
             var current = parseInt(event.currentTarget.parentElement.children[1].value);
-            event.currentTarget.parentElement.children[1].value = current + 1;
+            if (current + 1 <= event.target.parentElement.children[1].max) {
+                event.currentTarget.parentElement.children[1].value = current + 1;
+                event.currentTarget.parentElement.children[1].dispatchEvent(new Event('change'))
+            }
+           
 
         }
 
@@ -105,12 +112,23 @@ $this->title = 'Cart';
             var current = parseInt(event.currentTarget.parentElement.children[1].value);
             if (current - 1 > 0) {
                 event.currentTarget.parentElement.children[1].value = current - 1;
+                event.currentTarget.parentElement.children[1].dispatchEvent(new Event('change'))
             }
 
         }
+        function QuantityChange() {
+            var total=event.currentTarget.value *parseInt(event.currentTarget.parentElement.parentElement.children[1].children[0].children[0].children[0].innerHTML);
+            event.currentTarget.parentElement.parentElement.children[2].children[0].children[0].children[0].innerHTML = total;
+            handleProductQuantityChange();
+        }
 
-        function handleProductQuantityChange(elem) {
-            
+
+        function handleProductQuantityChange() {
+            const sum = [...document.querySelectorAll('span.productTotal')].reduce((r, e) => {
+                return r + parseInt(e.innerHTML)
+            }, 0)
+
+            document.getElementById("totalPrice").innerHTML = sum;
         }
 
         function calculateTotalProductPrice() {

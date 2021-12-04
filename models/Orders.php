@@ -17,7 +17,8 @@ class Orders extends DbModel
     public int $id = 0;
     public int $user_id = 0;
     public int $status = 0;
-    public string $time;
+    public string $time="";
+    public string $shippingDay="";
     public int $shippingCost=0;
     public int $totalProductsCost=0;
     public int $totalIncludingTaxes = 0;

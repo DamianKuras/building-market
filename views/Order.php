@@ -3,7 +3,7 @@ $this->title = "Zamówienie";
 ?>
 
 <div>
-    <div class="row">
+    <div class="row mb-5">
         <div class="col-sm">
             <h3>Id: <?php echo $order->id ?></h3>
         </div>
@@ -11,7 +11,7 @@ $this->title = "Zamówienie";
             <h3> <?php echo $order->time ?></h3>
         </div>
         <div class="col-sm">
-            <h3> <?php echo $order->getStatusLabel($order->status) ?> </h3>
+            <h3>Status:  <?php echo $order->getStatusLabel($order->status) ?> </h3>
         </div>
 
 
@@ -41,8 +41,8 @@ $this->title = "Zamówienie";
                                     <div class="w-25">
                                         <div class="input-group">
                                             <p class="" >Quantity: <?php echo $model['quantity'] ?></p>
-                                            <p class="mb-0"><span><strong id="summary">Price each: $17.99</strong></span></p class="mb-0">
-                                            <p class="mb-0">Total: <span><strong id="totalForProduct">$</strong></span></p class="mb-0">
+                                            <p class="mb-0"><span><strong id="summary">Price each: <?php echo $model['price']?></strong></span></p class="mb-0">
+                                            <p class="mb-0">Total: <span><strong id="totalForProduct"><?php echo number_format($model['price'] * $model['quantity'], 2) ?> $</strong></span></p class="mb-0">
                                         </div>
                                     </div>
                                 </div>
@@ -83,11 +83,11 @@ $this->title = "Zamówienie";
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                         Products:
-                        <span>$25.98</span>
+                        <span><?php echo number_format($order->totalProductsCost,2) ?> $</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                         Shipping
-                        <span>$10</span>
+                        <span><?php echo number_format($order->shippingCost,2) ?> $</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                         <div>
@@ -96,7 +96,7 @@ $this->title = "Zamówienie";
                                 <p class="mb-0">(including taxes)</p>
                             </strong>
                         </div>
-                        <span><strong>$53.98</strong></span>
+                        <span><strong><?php echo number_format($order->shippingCost + $order->totalProductsCost,2) ?> $</strong></span>
                     </li>
                 </ul>
             </div>

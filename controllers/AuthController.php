@@ -13,7 +13,7 @@ use app\models\Product;
 use app\models\Orders;
 use app\models\OrderedItems;
 use app\base\middlewares\AuthMiddleware;
-
+use DateTime;
 
 class AuthController extends Controller
 {
@@ -80,12 +80,17 @@ class AuthController extends Controller
     {
         $cart = new Cart();
         $cartItems = $cart->getCardItems(Application::$app->user->id);
+        
         if ($request->isPost()) {
             $order = new Orders();
 
             $order->user_id = Application::$app->user->id;
             $order->status = 0;
             $order->time = (new \DateTime())->format('Y-m-d H:i:s');
+            $shippingDate = (new \DateTime());
+            $shippingDate->modify('+1 day');
+            $order->shippingDay =$shippingDate->format('Y-m-d H:i:s');
+            $totalProductPrice=0;
             $id = $order->saveWithId();
             foreach ($cartItems as $item) {
                 $orderedItem = new OrderedItems();
@@ -93,9 +98,12 @@ class AuthController extends Controller
                 $orderedItem->ordered_product_id = $item['product_id'];
                 $orderedItem->quantity = $item['quantity'];
                 $orderedItem->save();
+                $product = new Product();
+                $productDetails = $product->getById($item['product_id']);
+                $totalProductPrice += (intval($item['quantity']) * $productDetails->price);
                 $cart->removeFromCart(Application::$app->user->id,$item['product_id']);
             }
-
+            $order->update(['id'=>$id],['totalProductsCost'=>$totalProductPrice,'shippingCost'=>10.00]);
             Application::$app->session->setFlash('succes', 'Thank you for buying producst');
             Application::$app->response->redirect('/');
             exit;
@@ -105,7 +113,7 @@ class AuthController extends Controller
         foreach ($cartItems as $item) {
             $product = new Product();
             $productDetails = $product->getById($item['product_id']);
-            $displayModel = ['name' => $productDetails->name, 'brand' => $productDetails->brand, 'imageLink' => $productDetails->imageLink, 'quantity' => $item['quantity'] ,'product_id' => $item['product_id'], 'price'=>$productDetails->price];
+            $displayModel = ['name' => $productDetails->name, 'brand' => $productDetails->brand, 'quantityInStock'=> $productDetails->quantityInStock ,'imageLink' => $productDetails->imageLink, 'quantity' => $item['quantity'] ,'product_id' => $item['product_id'], 'price'=>$productDetails->price];
             $orderedItemsModels[] = $displayModel;
         }
         $cartItemsCount=count($cartItems);
@@ -174,7 +182,7 @@ class AuthController extends Controller
         foreach ($orderItems as $item) {
             $product = new product();
             $productDetails = $product->getById($item['ordered_product_id']);
-            $displayModel = ['name' => $productDetails->name, 'brand' => $productDetails->brand, 'imageLink' => $productDetails->imageLink, 'quantity' => $item['quantity'], 'id' => $order->id];
+            $displayModel = ['name' => $productDetails->name, 'brand' => $productDetails->brand, 'price'=> $productDetails->price  ,'imageLink' => $productDetails->imageLink, 'quantity' => $item['quantity'], 'id' => $order->id];
             $orderedItemsModels[] = $displayModel;
         }
         $orderItemsCount= count($orderItems);
