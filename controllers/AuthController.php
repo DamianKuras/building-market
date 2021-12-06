@@ -40,7 +40,7 @@ class AuthController extends Controller
             'model' => $loginForm,
         ]);
     }
-    public function register(Request $request)
+    public function register(Request $request, Response $response)
     {
         $user = new User();
         if ($request->isPost()) {
@@ -72,7 +72,7 @@ class AuthController extends Controller
             $response->redirect($_SESSION['rdrurl']);
         }
         else{
-            $response->redirect('/');
+            $response->redirect('/home');
         }
     }
 
@@ -80,16 +80,16 @@ class AuthController extends Controller
     {
         $cart = new Cart();
         $cartItems = $cart->getCardItems(Application::$app->user->id);
-        
+        $expectedShippingDay=(new \DateTime());
+        $expectedShippingDay->modify('+1 day');
+        $expectedShippingDay = $expectedShippingDay->format('Y-m-d');
         if ($request->isPost()) {
             $order = new Orders();
 
             $order->user_id = Application::$app->user->id;
             $order->status = 0;
             $order->time = (new \DateTime())->format('Y-m-d H:i:s');
-            $shippingDate = (new \DateTime());
-            $shippingDate->modify('+1 day');
-            $order->shippingDay =$shippingDate->format('Y-m-d H:i:s');
+            $order->shippingDay = $expectedShippingDay;
             $totalProductPrice=0;
             $id = $order->saveWithId();
             foreach ($cartItems as $item) {
@@ -121,7 +121,8 @@ class AuthController extends Controller
         return $this->render('cart', [
             'cartItemsCount'=> $cartItemsCount,
             'cartItems' => $cartItems,
-            'orderedItemsModels' => $orderedItemsModels
+            'orderedItemsModels' => $orderedItemsModels,
+            'expectedShippingDay'=> $expectedShippingDay
         ]);
     }
     public function cartRemove(Request $request, Response $response)
@@ -131,31 +132,44 @@ class AuthController extends Controller
         $cart->removeFromCart(Application::$app->user->id, $cart->product_id);
         $response->redirect('/cart');
     }
+    public function cartSetProductQuantity(Request $request){
+        $cart = new Cart();
+        $cart->loadData($request->getBody());
+        $cart->user_id = Application::$app->user->id;
+        $product = new Product;
+        $productInfo = $product->getById($cart->product_id);
+        if(!$productInfo->verifyQuantity($cart->quantity)){
+            return 'Sorry we dont have this many.';
+        }
+        else{
+            $cart->setQuantityOfExisting(Application::$app->user->id, $cart->product_id, $cart->quantity);
+            return 'Changed product quantity';
+        }
+        return 'error';
+
+
+    }
     public function cartAdd(Request $request)
     {
         $cart = new Cart();
         $cart->loadData($request->getBody());
         $cart->user_id = Application::$app->user->id;
         $product = new Product;
+        sleep(1);
         $productInfo = $product->getById($cart->product_id);
         if (!$productInfo->verifyQuantity($cart->quantity)) {
             return 'Sorry we dont have this many.';
         }
         if ($cart->itemAlreadyInCart(Application::$app->user->id, $cart->product_id)) {
             $cart->addQuantityToExisting(Application::$app->user->id, $cart->product_id, $cart->quantity);
-            $productInfo->removeFromStock($cart->quantity);
             return 'Item already in cart. Added extra amount to cart';
         }
         if ($cart->validate() && $cart->save()) {
-            $productInfo->removeFromStock($cart->quantity);
             return 'Succesfully added to cart';
-        } else {
-            return 'U need to sing up to add products to cart';
-        }
+        } 
+        return 'U need to sing up to add products to cart';
     }
-    public function carrSetProductQuantity(Request $request){
-        
-    }
+
 
     public function shopingHistory()
     {

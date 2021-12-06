@@ -19,7 +19,6 @@ class View
         $layoutContent = $this->layoutContent();
         $login = $this->login();
         $FinalView = str_replace('{{content}}', $viewContent, $layoutContent);
-        $FinalView = str_replace('{{login}}', $login, $FinalView);
         return $FinalView;
     }
     protected function layoutContent()

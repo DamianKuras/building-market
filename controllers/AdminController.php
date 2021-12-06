@@ -9,7 +9,6 @@ use app\models\Orders;
 use app\base\Request;
 use app\models\OrderedItems;
 use app\models\product;
-
 class AdminController extends Controller
 {
     public function __construct()
@@ -17,11 +16,11 @@ class AdminController extends Controller
         $this->reigsterMiddleware(new AdminAuthMiddleware(['adminPanel', 'orderDetails', 'markAsSended', 'getProductList', 'editProduct', 'addProduct', 'removeProduct']));
     }
 
-    public function adminPanel()
+    public function allOrdersList()
     {
         $order = new Orders();
         $ordersModels = $order->getAll();
-        return $this->render('adminPanel', [
+        return $this->render('Admin/AllOrdersList', [
             'order' => $order,
             'orders' => $ordersModels
         ]);
@@ -41,7 +40,7 @@ class AdminController extends Controller
             $orderedItemsModels[] = $displayModel;
         }
 
-        return $this->render('OrderDetails', [
+        return $this->render('Admin/OrderDetails', [
             'order' => $orderDetails,
             'orderedItemsModels' => $orderedItemsModels
         ]);
@@ -52,14 +51,14 @@ class AdminController extends Controller
         $order->loadData($request->getBody());
         $order->markAsSended();
         Application::$app->session->setFlash('succes', 'Zmieniono status na wysłano');
-        Application::$app->response->redirect('/admin');
+        Application::$app->response->redirect('/Admin/all-orders-list');
         exit;
     }
     public function getProductList()
     {
         $products = new product();
         $productModels = $products->getAll();
-        return $this->render('getProductList', [
+        return $this->render('/Admin/AllProductList', [
             'productModels' => $productModels
         ]);
     }
@@ -70,16 +69,16 @@ class AdminController extends Controller
             $product->loadData($request->getBody());
             if ($product->validate() && $product->ProductUpdate()) {
                 Application::$app->session->setFlash('succes', 'Pomyślnie zmieniono produkt');
-                Application::$app->response->redirect('/admin/getProductList');
+                Application::$app->response->redirect('/admin/get-products-list');
                 exit;
             }
-            return $this->render('EditProduct', [
+            return $this->render('/Admin/EditProduct', [
                 'model' => $product
             ]);
         }
         $product->loadData($request->getBody());
         $changed = $product->getById($product->id);
-        return $this->render('EditProduct', [
+        return $this->render('/Admin/EditProduct', [
             'model' => $changed
         ]);
     }
@@ -91,15 +90,15 @@ class AdminController extends Controller
             $product->loadData($request->getBody());
             if ($product->validate() && $product->save()) {
                 Application::$app->session->setFlash('succes', 'Pomyślnie dodano produkt');
-                Application::$app->response->redirect('/admin');
+                Application::$app->response->redirect('/Admin/getProductList');
                 exit;
             }
 
-            return $this->render('addProduct', [
+            return $this->render('Admin/AddProduct', [
                 'model' => $product
             ]);
         }
-        return $this->render('addProduct', [
+        return $this->render('Admin/AddProduct', [
             'model' => $product
         ]);
     }

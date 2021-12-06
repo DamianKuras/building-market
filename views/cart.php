@@ -27,6 +27,7 @@ $this->title = 'Cart';
                                             <button class="btn btn-secondary" onclick="decrementQuantity()"><i class="fas fa-minus"></i></button>
                                             <input class="form-control" min="0" max=<?php echo $model['quantityInStock'] ?> id="quanitity" name="quantity" value="<?php echo $model['quantity'] ?>" type="number" onchange="QuantityChange()">
                                             <button class="btn btn-secondary" onclick="incrementQuantity()"><i class="fas fa-plus"></i></button>
+                                            <input type="hidden" value=<?php echo $model['product_id'] ?> />
                                         </div>
 
                                         <p class="mb-0">Price for one: <span><strong id="summary"><span><?php echo $model['price'] ?></span> $</strong></span></p class="mb-0">
@@ -48,12 +49,14 @@ $this->title = 'Cart';
 
             </div>
         </div>
-        <div class="mb-3">
-            <div class="pt-4">
-                <h5 class="mb-4">Expected shipping delivery</h5>
-                <p class="mb-0"> Thu., 12.03. - Mon., 16.03.</p>
+        <?php if ($cartItemsCount > 0) : ?>
+            <div class="mb-5">
+                <div class="pt-4">
+                    <h5 class="mb-4">Expected shipping delivery</h5>
+                    <p class="mb-0"><?php echo $expectedShippingDay ?></p>
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
 
 
     </div>
@@ -83,19 +86,48 @@ $this->title = 'Cart';
                         <span><strong><span id="totalPrice"></span> $</strong></span>
                     </li>
                 </ul>
-                <a class="btn btn-primary" href="./checkout">go to checkout</a>
+                <?php $form = app\base\form\Form::begin('', "post") ?>
+                <h3>Payment</h3>
+                <p>Not a real shop. Website created to learn more about programming. </p>
+                <button class="btn btn-primary" type="submit" value="Submit">Make Order</button>
+                <?php app\base\form\Form::end() ?>
             </div>
         </div>
     </div>
-
-    <div class="mb-5">
-        <?php $form = app\base\form\Form::begin('', "post") ?>
-        <h3>Payment</h3>
-        <p>Not a real shop. Website created to learn more about programming. </p>
-        <button class="btn btn-primary" type="submit" value="Submit">Make Order</button>
-        <?php app\base\form\Form::end() ?>
-    </div>
+        
     <script>
+        function debounce(func, timeout = 1000) {
+            let timer;
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    func.apply(this, args);
+                }, timeout);
+            };
+        }
+
+        function saveInput(id, quantity) {
+            console.log('Saving data');
+            console.log(id);
+            console.log(quantity);
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("feedback").style.color = 'green';
+                    document.getElementById("feedback").innerHTML = this.response;
+                }
+                if (this.readyState == 4 && this.status == 403) {
+                    document.getElementById("feedback").style.color = 'red';
+                    document.getElementById("feedback").innerHTML = 'U need to sing in first.';
+
+                }
+            }
+            var requestText = "/cart/setProductQuantity";
+            xhttp.open("POST", requestText, true);
+            xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhttp.send("product_id=" + id + "&quantity=" + quantity);
+        }
+        const processChange = debounce((id, quantity) => saveInput(id, quantity));
         window.onload = handleProductQuantityChange;
 
         function incrementQuantity() {
@@ -104,7 +136,6 @@ $this->title = 'Cart';
                 event.currentTarget.parentElement.children[1].value = current + 1;
                 event.currentTarget.parentElement.children[1].dispatchEvent(new Event('change'))
             }
-           
 
         }
 
@@ -116,10 +147,12 @@ $this->title = 'Cart';
             }
 
         }
+
         function QuantityChange() {
-            var total=event.currentTarget.value *parseInt(event.currentTarget.parentElement.parentElement.children[1].children[0].children[0].children[0].innerHTML);
+            var total = event.currentTarget.value * parseInt(event.currentTarget.parentElement.parentElement.children[1].children[0].children[0].children[0].innerHTML);
             event.currentTarget.parentElement.parentElement.children[2].children[0].children[0].children[0].innerHTML = total;
             handleProductQuantityChange();
+            processChange(parseInt(event.currentTarget.parentElement.children[3].value), event.currentTarget.value);
         }
 
 
@@ -131,8 +164,6 @@ $this->title = 'Cart';
             document.getElementById("totalPrice").innerHTML = sum;
         }
 
-        function calculateTotalProductPrice() {
-
-        }
+        
     </script>
 </div>

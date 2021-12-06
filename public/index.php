@@ -37,25 +37,26 @@ $app->router->get('/product', [ProductController::class, 'showProductDetails']);
 $app->router->get('/cart', [AuthController::class, 'cart']);
 $app->router->post('/cart', [AuthController::class, 'cart']);
 
-$app->router->get('/cart/remove', [AuthController::class, 'cartRemove']);
-$app->router->get('/cart/add', [AuthController::class, 'cartAdd']);
+$app->router->post('/cart/remove', [AuthController::class, 'cartRemove']);
+$app->router->post('/cart/add', [AuthController::class, 'cartAdd']);
+$app->router->post('/cart/setProductQuantity',[AuthController::class, 'cartSetProductQuantity']);
 $app->router->get('/shopingHistory', [AuthController::class, 'shopingHistory']);
 
 $app->router->get('/order', [AuthController::class, 'orderDetails']);
 
-$app->router->get('/admin', [AdminController::class, 'adminPanel']);
+$app->router->get('/admin/all-order-list', [AdminController::class, 'allOrdersList']);
 $app->router->get('/admin/order', [AdminController::class, 'orderDetails']);
 
 
-$app->router->get('/admin/markAsSended', [AdminController::class, 'markAsSended']);
+$app->router->post('/admin/mark-as-sended', [AdminController::class, 'markAsSended']);
 
-$app->router->get('/admin/editProduct', [AdminController::class, 'editProduct']);
-$app->router->post('/admin/editProduct', [AdminController::class, 'editProduct']);
-$app->router->get('/admin/removeProduct', [AdminController::class, 'removeProduct']);
+$app->router->get('/admin/edit-product', [AdminController::class, 'editProduct']);
+$app->router->post('/admin/edit-product', [AdminController::class, 'editProduct']);
+$app->router->post('/admin/remove-product', [AdminController::class, 'removeProduct']);
 
-$app->router->get('/admin/addProduct', [AdminController::class, 'addProduct']);
-$app->router->post('/admin/addProduct', [AdminController::class, 'addProduct']);
+$app->router->get('/admin/add-product', [AdminController::class, 'addProduct']);
+$app->router->post('/admin/add-product', [AdminController::class, 'addProduct']);
 
-$app->router->get('/admin/getProductList', [AdminController::class, 'getProductList']);
+$app->router->get('/admin/get-products-list', [AdminController::class, 'getProductList']);
 
 $app->run();
