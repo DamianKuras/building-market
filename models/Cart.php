@@ -8,9 +8,9 @@ use app\base\db\DbModel;
 class Cart extends DbModel
 {
 
-    public int $user_id;
-    public int $product_id;
-    public int $quantity;
+    public int $user_id=0;
+    public int $product_id=0;
+    public int $quantity=0;
     public function rules(): array
     {
         return [
@@ -55,6 +55,9 @@ class Cart extends DbModel
         $item = Cart::findOne(['user_id' => $user_id, 'product_id' => $product_id]);
         $newQuantityValue = $item->quantity + $added_quantity;
         Cart::update(['user_id' => $user_id, 'product_id' => $product_id], ['quantity' => $newQuantityValue]);
+    }
+    public function setQuantityOfExisting(int $user_id, int $product_id, int $quantity){
+        Cart::update(['user_id' => $user_id, 'product_id' => $product_id], ['quantity' => $quantity]);
     }
     public function setQuantityOfProduct(int $user_id,int $product_id, int $quantity){
         Cart::update(['user_id' => $user_id, 'product_id' => $product_id], ['quantity' => $quantity]);

@@ -6,7 +6,7 @@ use app\base\form\NumberInputField;
 
 $this->title = 'Adding product';
 ?>
-<h1> Dodawanie produktu </h1>
+<h1> Adding product </h1>
 <?php $form = app\base\form\Form::begin('', "post") ?>
 <?php echo $form->field($model, 'name') ?>
 <?php echo $form->field($model, 'price')->numberField() ?>
@@ -15,5 +15,5 @@ $this->title = 'Adding product';
 <?php echo $form->field($model, 'brand') ?>
 <?php echo $form->field($model, 'quantityInStock')->numberField() ?>
 <?php echo new TextareaField($model, 'description') ?>
-<button type="submit" class="btn btn-primary mb-5" value="Submit">submit</button>
+<button type="submit" class="btn btn-primary mb-5" value="Submit">Submit</button>
 <?php app\base\form\Form::end() ?>

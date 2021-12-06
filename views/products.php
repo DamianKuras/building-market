@@ -22,7 +22,6 @@ $this->title = 'Products';
                         <p> <?php echo $model['price'] ?>$</p>
                         <a class="btn btn-outline-secondary " href="/product?id=<?php echo $model['id'] ?>">More Info</a>
                     </div>
-
                 </div>
             </div>
         <?php } ?>

@@ -8,14 +8,14 @@ $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
       <div id="carouselProductImages" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="/assets/images/pexels-alexander-isreb-1797428.jpg" class="d-block w-100" alt="...">
+            <img src=<?php echo $model->imageLink ?> class="d-block w-100" alt="...">
           </div>
           <!-- <div class="carousel-item">
             <img src="..." class="d-block w-100" alt="...">
           </div>
           <div class="carousel-item">
             <img src="..." class="d-block w-100" alt="...">
-          </div> -->
+          </div> --> 
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselProductImages" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -73,7 +73,6 @@ $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
       if (this.readyState == 4 && this.status == 200) {
         document.getElementById("feedback").style.color = 'green';
         document.getElementById("feedback").innerHTML = this.response;
-        document.getElementById("quant").innerHTML -= document.getElementById('quantity').value;
       }
       if (this.readyState == 4 && this.status == 403) {
         document.getElementById("feedback").style.color = 'red';
@@ -82,9 +81,11 @@ $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
       }
     }
     var quant = document.getElementById('quantity').value;
-    var requestText = "/cart/add?product_id=" + <?php echo $model->id ?> + "&quantity=" + quant;
-    xhttp.open("GET", requestText, true);
-    xhttp.send();
+    var requestText = "/cart/add";
+   
+    xhttp.open("POST", requestText, true);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send("product_id=" + <?php echo $model->id ?> + "&quantity=" + quant);
   }
   function incrementQuantity() {  
     var current = parseInt(document.getElementById("quantity").value);

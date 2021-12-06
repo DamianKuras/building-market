@@ -15,5 +15,5 @@ $this->title = 'Edycja produktu';
 <?php echo $form->field($model, 'brand') ?>
 <?php echo $form->field($model, 'quantityInStock')->numberField() ?>
 <?php echo new TextareaField($model, 'description') ?>
-<button type="submit" value="Submit">submit</button>
+<button type="submit" class="btn btn-primary mb-5" value="Submit">submit</button>
 <?php app\base\form\Form::end() ?>

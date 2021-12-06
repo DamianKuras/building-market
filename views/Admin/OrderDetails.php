@@ -1,5 +1,6 @@
-<!-- <?php
+<?php
 $this->title = "Zamówienie";
+use app\models\Orders;
 ?>
 
 <div class="row">
@@ -13,7 +14,7 @@ $this->title = "Zamówienie";
     <h1> <?php echo Orders::getStatusLabel($order->status) ?> </h1>
     </div>
 </div>
-<h1>Produkty: </h1>
+<h1>Products </h1>
 <div class="cart-items">
     <?php foreach ($orderedItemsModels as $model) { ?>
 
@@ -31,7 +32,10 @@ $this->title = "Zamówienie";
 
         </div>
     <?php } ?>
-    <div class="cart-item-remove">
-        <a href="/admin/markAsSended?id=<?php echo $order->id ?>">Zmień status na wysłane</a>
+    <?php if ($order->status != ORDERS::STATUS_CANCELED && $order->status != ORDERS::STATUS_SENDED):?> 
+    <div class=" mb-5">
+        <a href="/admin/markAsSended?id=<?php echo $order->id ?>" class="btn btn-primary">Mark as sended</a>
     </div>
-</div> -->
+
+    <?php endif;?>
+</div>

@@ -47,15 +47,24 @@ use app\base\Application;
 
                 </form>
                 <div class="text-end">
-                    <!-- {{login}} -->
                     <?php if (Application::isGuest()) : ?>
                         <a class="btn btn-outline-light me-2" href='/login'>Sing-in</a>
                         <a class="btn btn-warning" href='/register'>Sign-up</a>
                     <?php elseif (Application::isAdmin()) : ?>
-                        <a class="btn btn-outline-light me-2" href="/admin">Lista Zamówień</a>
-                        <a class="btn btn-outline-light me-2" href="/admin/getProductList">All products list</a>
-                        <a class="btn btn-outline-light me-2" href="/admin/addProduct">Add Products</a>
-                        <a class="btn btn-outline-light me-2" href="/logout">Logout</a>
+                        <div class="dropdown">
+                            <a href="#" class="btn btn-outline-light text-decoration-none dropdown-toggle me-2" id="dropdown2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user"></i>
+                            </a>
+                            <ul class="dropdown-menu text-small" aria-labelledby="dropdown2" style="">
+                            <li><a class="dropdown-item" href="/admin/all-order-list">Orders</a></li>
+                            <li><a class="dropdown-item" href="/admin/get-products-list">Producs List</a></li>
+                            <li><a class="dropdown-item" href="/admin/add-product">Add Products</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                            </ul>
+                        </div>
                     <?php elseif (Application::isUser()) : ?>
                         <div class="d-flex p-2">
                             <a class="btn btn-outline-light me-2" href="/cart">Cart</a>
@@ -64,7 +73,7 @@ use app\base\Application;
                                     <i class="fas fa-user"></i>
                                 </a>
                                 <ul class="dropdown-menu text-small" aria-labelledby="dropdown1" style="">
-                                    <li><a class="dropdown-item" href="/shopingHistory">Orders</a></li>
+                                    <li><a class="dropdown-item" href="/shoping-history">Orders</a></li>
                                     <li><a class="dropdown-item" href="#">Account</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
