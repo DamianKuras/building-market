@@ -15,7 +15,7 @@ class AdminAuthMiddleware extends BaseMiddleware
     }
     public function execute()
     {
-        if (Application::isGuest() || !Application::isAdmin()) {
+        if (!Application::isAdmin()) {
             if (empty($this->actions) || in_array(Application::$app->controller->action, $this->actions)) {
                 throw new ForbiddenException();
             }

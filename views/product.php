@@ -4,30 +4,7 @@ $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
 ?>
 <div class="row">
   <div class="col-md-6 mb-4">
-    <div class="row product-gallery mx-1">
-      <div id="carouselProductImages" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src=<?php echo $model->imageLink ?> class="d-block w-100" alt="...">
-          </div>
-          <!-- <div class="carousel-item">
-            <img src="..." class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="..." class="d-block w-100" alt="...">
-          </div> --> 
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProductImages" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselProductImages" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-
-    </div>
+    <img src=<?php echo $model->imageLink ?> class="d-block w-100" alt="...">
   </div>
   <div class="col-md-6">
 
@@ -44,19 +21,19 @@ $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
         <button class="btn btn-secondary" onclick="incrementQuantity()"><i class="fas fa-plus"></i></button>
       </div>
       <div class="col-lg m-2">
-      <button type="button" class="btn btn-primary" onClick="addToCartAsync()"><i class="fas fa-shopping-cart mx-2"  ></i>Add to cart</button>
+        <button type="button" class="btn btn-primary" onClick="addToCart()"><i class="fas fa-shopping-cart mx-2"></i>Add to cart</button>
       </div>
       <div class="col-lg m-2">
-      <p id="feedback" class=""></p>
+        <p id="feedback" class=""></p>
       </div>
     </div>
-    
+
   </div>
 </div>
 
 
 <script>
-  function addToCartAsync() {
+  function addToCart() {
     if (document.getElementById('quantity').value < 1) {
       document.getElementById("feedback").style.color = 'red';
       document.getElementById("feedback").innerHTML = 'Quantity must be greater than 0';
@@ -82,20 +59,22 @@ $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
     }
     var quant = document.getElementById('quantity').value;
     var requestText = "/cart/add";
-   
+
     xhttp.open("POST", requestText, true);
     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhttp.send("product_id=" + <?php echo $model->id ?> + "&quantity=" + quant);
   }
-  function incrementQuantity() {  
+
+  function incrementQuantity() {
     var current = parseInt(document.getElementById("quantity").value);
-    if(current< <?php echo $model->quantityInStock ?>)
-    document.getElementById("quantity").value=current+1; 
+    if (current < <?php echo $model->quantityInStock ?>)
+      document.getElementById("quantity").value = current + 1;
   }
-  function decrementQuantity() {  
+
+  function decrementQuantity() {
     var current = parseInt(document.getElementById("quantity").value);
-    if(current-1>0){
-      document.getElementById("quantity").value=current-1; 
+    if (current - 1 > 0) {
+      document.getElementById("quantity").value = current - 1;
     }
   }
 </script>
