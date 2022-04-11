@@ -2,20 +2,27 @@
 $this->title = 'Building Market';
 $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
 ?>
-<div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+<div class="container-fluid min-vh-100">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5 mb-5 ">
     <div class="col-10 col-sm-8 col-lg-6">
-        <img src="/assets/images/pexels-alexander-isreb-1797428.jpg" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+        <img src="/assets/images/pexels-alexander-isreb-1797428.jpg" class="img-fluid mx-auto d-block" alt="Bootstrap Themes"  loading="lazy">
+        
     </div>
-    <div class="col-lg-6">
-        <h1 class="display-5 fw-bold lh-1 mb-3">We sell high quality building materials</h1>
-        <p class="lead">High quality building materials delivered quikcly to you.</p>
-        <h3> See offers and learn more about us <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+    <div class="col-lg-6 mb-5">
+        <h1 class="display-5 fw-bold lh-1 mb-5">We sell high quality building materials.</h1>
+        <p class="lead">High quality building materials delivered quickly to you.</p>
+    </div>
+    <div>
+    <h3> See offers and learn more about us <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
 </svg></h3>
     </div>
 </div>
-<h2 class="mt-5">On sale: </h2>
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-5 mt-2">
+</div>
+
+<h2>On sale: </h2>
+<div class="container-fluid min-vh-100">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-5 mt-5">
     <?php foreach ($onSales as $model) { ?>
         <div class="col">
             <div class="card h-100">
@@ -32,7 +39,7 @@ $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
         </div>
     <?php } ?>
 </div>
-
+</div>
 <div class="mt-5 text-center">
     <h2 class="pb-2 border-bottom"> Our features: </h2>
     <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
