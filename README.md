@@ -3,7 +3,6 @@
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
-* [About Buildign Market](#about-step-explain)
 * [Implemented features](#implemented-features)
 
 ## General info
