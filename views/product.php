@@ -17,7 +17,7 @@ $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
     <div class="row">
       <div class="input-group col-lg m-2 ">
         <button class="btn btn-secondary" onclick="decrementQuantity()"><i class="fas fa-minus"></i></button>
-        <input class="form-control " type="number" id="quantity" min="0" max="<?php echo $model->quantityInStock ?>" value="1" class="product-add-input" />
+        <input class="form-control text-center" type="number" id="quantity" min="0" max="<?php echo $model->quantityInStock ?>" value="1" class="product-add-input" />
         <button class="btn btn-secondary" onclick="incrementQuantity()"><i class="fas fa-plus"></i></button>
       </div>
       <div class="col-lg m-2">
