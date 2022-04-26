@@ -14,7 +14,7 @@ $this->title = 'Products';
         <?php foreach ($products as $model) { ?>
             <div class="col">
                 <div class="card h-100">
-                    <img class="card-img-top h-100" src="<?php echo $model['imageLink'] ?>" alt="image" />
+                    <img class="card-img-top h-100" src="<?php echo $model['image_link'] ?>" alt="image" />
                     <div class="card-body">
                         <h3 class="card-title"> <?php echo $model['name'] ?></h3>
                         <p> <?php echo $model['category'] ?></p>

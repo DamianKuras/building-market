@@ -27,8 +27,14 @@ class Form
     }
     public function NumberField(Model $model, $attribute, int $min = 0, int $max = 1000000)
     {
-        $intAtrribute = (int)$attribute;
+        $intAtrribute = intval($attribute);
         $inputField = new NumberInputField($model, $intAtrribute);
+        $inputField->setMinAndMax($min, $max);
+        return  $inputField;
+    }
+    public function FloatField(Model $model, $attribute, float $min = 0, float $max = 1000000){
+        $floatAtribute = floatval($attribute);
+        $inputField = new FloatInputField($model, $intAtrribute);
         $inputField->setMinAndMax($min, $max);
         return  $inputField;
     }

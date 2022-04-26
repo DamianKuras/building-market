@@ -18,10 +18,22 @@ class Product extends DbModel
     public string $name = '';
     public float $price = 0;
     public string $category = '';
-    public string $imageLink = '';
+    public string $image_link = '';
     public string $brand = '';
     public string $description = '';
-    public int $quantityInStock = 0;
+    public int $quantity_in_stock = 0;
+    public static function types(): array{
+        return [
+            'id'=>\PDO::PARAM_INT,
+            'name' => \PDO::PARAM_STR,
+            'price' => \PDO::PARAM_STR,
+            'category' => \PDO::PARAM_STR,
+            'image_link' => \PDO::PARAM_STR,
+            'brand' => \PDO::PARAM_STR,
+            'quantity_in_stock' => \PDO::PARAM_INT,
+            'description' => \PDO::PARAM_STR,
+        ];
+    }
     public function save()
     {
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
@@ -33,9 +45,9 @@ class Product extends DbModel
             'name' => [self::RULE_REQUIRED],
             'price' => [self::RULE_REQUIRED],
             'category' => [self::RULE_REQUIRED],
-            'imageLink' => [self::RULE_REQUIRED],
+            'image_link' => [self::RULE_REQUIRED],
             'brand' => [self::RULE_REQUIRED],
-            'quantityInStock' => [self::RULE_REQUIRED],
+            'quantity_in_stock' => [self::RULE_REQUIRED],
             'description' => [self::RULE_REQUIRED]
         ];
     }
@@ -49,7 +61,7 @@ class Product extends DbModel
     }
     public function attributes(): array
     {
-        return ['name', 'price', 'category', 'imageLink', 'brand', 'quantityInStock', 'description'];
+        return ['name', 'price', 'category', 'image_link', 'brand', 'quantity_in_stock', 'description'];
     }
 
     public function labels(): array
@@ -59,8 +71,8 @@ class Product extends DbModel
             'price' => 'Price',
             'category' => 'Category',
             'brand' => 'Brand',
-            'imageLink' => 'Image',
-            'quantityInStock' => 'Quantity in stock',
+            'image_link' => 'Image',
+            'quantity_in_stock' => 'Quantity in stock',
             'description' => 'Description'
         ];
     }
@@ -95,30 +107,31 @@ class Product extends DbModel
     }
     public function verifyQuantity(int $quantity)
     {
-        return ($this->quantityInStock >= $quantity);
+        return ($this->quantity_in_stock >= $quantity);
     }
     public function removeFromStock(int $amount)
     {
-        $remaining = $this->quantityInStock - $amount;
-        parent::update(['id' => $this->id], ['quantityInStock' => $remaining]);
+        $remaining = $this->quantity_in_stock - $amount;
+        parent::update(['id' => $this->id], ['quantity_in_stock' => $remaining]);
     }
     public function setStockAmount(int $id, int $amount)
     {
         $product = new Product();
         $product->getById($id);
-        parent::update(['id' => $product->id], ['quantityInStock' => $amount]);
+        parent::update(['id' => $product->id], ['quantity_in_stock' => $amount]);
     }
     public function ProductUpdate()
     {
         parent::update(['id' => $this->id],[
             'name' => $this->name, 'price' => $this->price, 'category' => $this->category,
-            'imageLink' => $this->imageLink, 'brand' => $this->brand, 'description' => $this->description, 'quantityInStock' => $this->quantityInStock
+            'image_link' => $this->image_link, 'brand' => $this->brand, 'description' => $this->description, 'quantity_in_stock' => $this->quantity_in_stock
         ]);
         
         return true;
     }
-    public function searchAllProductsWithText(string $searchText){
-        $products=parent::findAllWhere(['name'=>$searchText,'category'=>$searchText,'description'=>$searchText]);
+    public function searchAllProductsWithText(string $searchText): array{
+        $where=['name'=>$searchText, 'category'=>$searchText, 'description'=>$searchText];
+        $products = parent::findAllWhere($where);
         return $products;
     }
 }

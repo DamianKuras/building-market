@@ -12,6 +12,7 @@ class Model
     const RULE_UNIQUE = 'unique';
 
     public array $errors = [];
+    
 
     public function loadData($data)
     {
@@ -56,7 +57,7 @@ class Model
                     $tableName = $className::tableName();
                     $db = Application::$app->db;
                     $statement = $db->prepare("SELECT * FROM $tableName WHERE $uniqueAttr = :$uniqueAttr");
-                    $statement->bindValue(":$uniqueAttr", $value);
+                    $statement->bindValue(":$uniqueAttr", $value, $type[$uniqueAttr]);
                     $statement->execute();
                     $record = $statement->fetchObject();
                     if ($record) {

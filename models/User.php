@@ -4,18 +4,23 @@ namespace app\models;
 
 use app\base\db\DbModel;
 
-
 class User extends DbModel
 {
-
-    const STATUS_INACTIVE = 0;
-    const STATUS_ACTIVE = 1;
     public int $id = 0;
     public string $username = '';
     public string $email = '';
     public string $password = '';
     public string $passwordConfirm = '';
-    public bool $isAdmin = false;
+    public bool $isadmin = false;
+    public static function types(): array{
+        return [
+            'id'=>\PDO::PARAM_INT,
+            'username'=>\PDO::PARAM_STR,
+            'email'=> \PDO::PARAM_STR,
+            'password'=>\PDO::PARAM_STR,
+            'isadmin'=>\PDO::PARAM_BOOL,
+        ];
+    }
     public function save()
     {
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
@@ -40,7 +45,7 @@ class User extends DbModel
     }
     public function attributes(): array
     {
-        return ['username', 'email', 'password', 'isAdmin'];
+        return ['username', 'email', 'password', 'isadmin'];
     }
 
     public function labels(): array
@@ -59,6 +64,7 @@ class User extends DbModel
 
     public function isAdmin()
     {
-        return $this->isAdmin;
+        return $this->isadmin;
     }
+
 }

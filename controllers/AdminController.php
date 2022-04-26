@@ -8,7 +8,7 @@ use app\base\middlewares\AdminAuthMiddleware;
 use app\models\Orders;
 use app\base\Request;
 use app\models\OrderedItems;
-use app\models\product;
+use app\models\Product;
 class AdminController extends Controller
 {
     public function __construct()
@@ -36,7 +36,7 @@ class AdminController extends Controller
         foreach ($orderItems as $item) {
             $product = new product();
             $productDetails = $product->getById($item['ordered_product_id']);
-            $displayModel = ['name' => $productDetails->name, 'brand' => $productDetails->brand, 'imageLink' => $productDetails->imageLink, 'quantity' => $item['quantity'], 'id' => $order->id];
+            $displayModel = ['name' => $productDetails->name, 'brand' => $productDetails->brand, 'imageLink' => $productDetails->image_link, 'quantity' => $item['quantity'], 'id' => $order->id];
             $orderedItemsModels[] = $displayModel;
         }
 
@@ -50,13 +50,13 @@ class AdminController extends Controller
         $order = new Orders();
         $order->loadData($request->getBody());
         $order->markAsSended();
-        Application::$app->session->setFlash('succes', 'Zmieniono status na wysłano');
+        Application::$app->session->setFlash('succes', 'Changed status to sended');
         Application::$app->response->redirect('/Admin/all-orders-list');
         exit;
     }
     public function getProductList()
     {
-        $products = new product();
+        $products = new Product();
         $productModels = $products->getAll();
         return $this->render('/Admin/AllProductList', [
             'productModels' => $productModels
@@ -68,7 +68,7 @@ class AdminController extends Controller
         if ($request->isPost()) {
             $product->loadData($request->getBody());
             if ($product->validate() && $product->ProductUpdate()) {
-                Application::$app->session->setFlash('succes', 'Pomyślnie zmieniono produkt');
+                Application::$app->session->setFlash('succes', 'Succesfully edite product');
                 Application::$app->response->redirect('/admin/get-products-list');
                 exit;
             }
@@ -89,8 +89,8 @@ class AdminController extends Controller
         if ($request->isPost()) {
             $product->loadData($request->getBody());
             if ($product->validate() && $product->save()) {
-                Application::$app->session->setFlash('succes', 'Pomyślnie dodano produkt');
-                Application::$app->response->redirect('/Admin/getProductList');
+                Application::$app->session->setFlash('succes', 'Succefully added product');
+                Application::$app->response->redirect('/Admin/get-product-list');
                 exit;
             }
 

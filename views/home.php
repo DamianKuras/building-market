@@ -20,10 +20,10 @@ $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
 </div>
 </div>
 
-<h2>On sale: </h2>
+<h2>Featured Products: </h2>
 <div class="container-fluid min-vh-100">
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-5 mt-5">
-    <?php foreach ($onSales as $model) { ?>
+    <?php foreach ($featured as $model) { ?>
         <div class="col">
             <div class="card h-100">
                 <img class="card-img-top h-100" src="<?php echo $model['imageLink'] ?>" alt="image" />

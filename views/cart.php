@@ -78,9 +78,9 @@ $this->title = 'Cart';
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                         <div>
-                            <strong>The total</strong>
+                            <strong>Total Prodcuts price</strong>
                             <strong>
-                                <p class="mb-0">(including taxes)</p>
+                                <p class="mb-0">(including taxes without shipping)</p>
                             </strong>
                         </div>
                         <span><strong><span id="totalPrice"></span> $</strong></span>
@@ -96,33 +96,19 @@ $this->title = 'Cart';
     </div>
         
     <script>
-        function debounce(func, timeout = 1000) {
+        function debounce(func, timeout = 500) {
             let timer;
             return (...args) => {
                 clearTimeout(timer);
                 timer = setTimeout(() => {
                     func.apply(this, args);
                 }, timeout);
-            };
+            };z
         }
 
         function saveInput(id, quantity) {
-            console.log('Saving data');
-            console.log(id);
-            console.log(quantity);
             var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("feedback").style.color = 'green';
-                    document.getElementById("feedback").innerHTML = this.response;
-                }
-                if (this.readyState == 4 && this.status == 403) {
-                    document.getElementById("feedback").style.color = 'red';
-                    document.getElementById("feedback").innerHTML = 'U need to sing in first.';
-
-                }
-            }
-            var requestText = "/cart/setProductQuantity";
+            var requestText = "/cart/set-product-quantity";
             xhttp.open("POST", requestText, true);
             xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhttp.send("product_id=" + id + "&quantity=" + quantity);
@@ -149,16 +135,19 @@ $this->title = 'Cart';
         }
 
         function QuantityChange() {
-            var total = event.currentTarget.value * parseInt(event.currentTarget.parentElement.parentElement.children[1].children[0].children[0].children[0].innerHTML);
-            event.currentTarget.parentElement.parentElement.children[2].children[0].children[0].children[0].innerHTML = total;
+            var amount=event.currentTarget.value;
+            var price = parseFloat(event.currentTarget.parentElement.parentElement.children[1].children[0].children[0].children[0].innerHTML);
+            var totalForProduct = amount * price;
+            event.currentTarget.parentElement.parentElement.children[2].children[0].children[0].children[0].innerHTML = totalForProduct;
             handleProductQuantityChange();
-            processChange(parseInt(event.currentTarget.parentElement.children[3].value), event.currentTarget.value);
+            var productId=parseInt(event.currentTarget.parentElement.children[3].value);
+            processChange(productId, amount);
         }
 
 
         function handleProductQuantityChange() {
-            const sum = [...document.querySelectorAll('span.productTotal')].reduce((r, e) => {
-                return r + parseInt(e.innerHTML)
+            const sum = [...document.querySelectorAll('span.productTotal')].reduce((acc, valueSpan) => {
+                return acc + parseFloat(valueSpan.innerHTML)
             }, 0)
 
             document.getElementById("totalPrice").innerHTML = sum;

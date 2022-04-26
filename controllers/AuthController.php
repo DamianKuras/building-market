@@ -46,7 +46,7 @@ class AuthController extends Controller
         if ($request->isPost()) {
             $user->loadData($request->getBody());
             if ($user->validate() && $user->save()) {
-                Application::$app->session->setFlash('succes', 'Dziękujemy za rejestracje');
+                Application::$app->session->setFlash('succes', 'Thank you for registering');
                 if(isset($_SESSION['rdrurl'])){
                     $response->redirect($_SESSION['rdrurl']);
                 }
@@ -85,12 +85,11 @@ class AuthController extends Controller
         $expectedShippingDay = $expectedShippingDay->format('Y-m-d');
         if ($request->isPost()) {
             $order = new Orders();
-
             $order->user_id = Application::$app->user->id;
             $order->status = 0;
             $order->time = (new \DateTime())->format('Y-m-d H:i:s');
-            $order->shippingDay = $expectedShippingDay;
-            $totalProductPrice=0;
+            $order->shipping_day = $expectedShippingDay;
+            $totalProductPrice=0.0;
             $id = $order->saveWithId();
             foreach ($cartItems as $item) {
                 $orderedItem = new OrderedItems();
@@ -103,7 +102,7 @@ class AuthController extends Controller
                 $totalProductPrice += (intval($item['quantity']) * $productDetails->price);
                 $cart->removeFromCart(Application::$app->user->id,$item['product_id']);
             }
-            $order->update(['id'=>$id],['totalProductsCost'=>$totalProductPrice,'shippingCost'=>10.00]);
+            $order->update(['id'=>$id],['total_products_cost'=>$totalProductPrice,'shipping_cost'=>10.00]);
             Application::$app->session->setFlash('succes', 'Thank you for buying producst');
             Application::$app->response->redirect('/');
             exit;
@@ -113,7 +112,7 @@ class AuthController extends Controller
         foreach ($cartItems as $item) {
             $product = new Product();
             $productDetails = $product->getById($item['product_id']);
-            $displayModel = ['name' => $productDetails->name, 'brand' => $productDetails->brand, 'quantityInStock'=> $productDetails->quantityInStock ,'imageLink' => $productDetails->imageLink, 'quantity' => $item['quantity'] ,'product_id' => $item['product_id'], 'price'=>$productDetails->price];
+            $displayModel = ['name' => $productDetails->name, 'brand' => $productDetails->brand, 'quantityInStock'=> $productDetails->quantity_in_stock ,'imageLink' => $productDetails->image_link, 'quantity' => $item['quantity'] ,'product_id' => $item['product_id'], 'price'=>$productDetails->price];
             $orderedItemsModels[] = $displayModel;
         }
         $cartItemsCount=count($cartItems);
@@ -146,8 +145,6 @@ class AuthController extends Controller
             return 'Changed product quantity';
         }
         return 'error';
-
-
     }
     public function cartAdd(Request $request)
     {
@@ -187,7 +184,7 @@ class AuthController extends Controller
         $order->loadData($request->getBody());
 
         $orderDetails = $order->findOne(['user_id' => Application::$app->user->id, 'id' => $order->id]);
-
+        error_log( print_r( $orderDetails, true ) );
 
         $orderedItems = new OrderedItems();
         $orderItems = $orderedItems->getAllWhere(['order_id' => $order->id]);
@@ -196,7 +193,7 @@ class AuthController extends Controller
         foreach ($orderItems as $item) {
             $product = new product();
             $productDetails = $product->getById($item['ordered_product_id']);
-            $displayModel = ['name' => $productDetails->name, 'brand' => $productDetails->brand, 'price'=> $productDetails->price  ,'imageLink' => $productDetails->imageLink, 'quantity' => $item['quantity'], 'id' => $order->id];
+            $displayModel = ['name' => $productDetails->name, 'brand' => $productDetails->brand, 'price'=> $productDetails->price  ,'imageLink' => $productDetails->image_link, 'quantity' => $item['quantity'], 'id' => $order->id];
             $orderedItemsModels[] = $displayModel;
         }
         $orderItemsCount= count($orderItems);

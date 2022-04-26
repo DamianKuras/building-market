@@ -1,5 +1,5 @@
 <?php
-$this->title = "Zamówienie";
+$this->title = "Order";
 ?>
 
 <div>
@@ -63,10 +63,10 @@ $this->title = "Zamówienie";
             <div class="pt-4">
                 <?php if ($order->status===2):?>
                     <h5 class="mb-4">Shipped on day</h5>
-                    <p class="mb-0"> <?php echo  $order->shippingDay ?></p>
+                    <p class="mb-0"> <?php echo  $order->shipping_day ?></p>
                 <?php else: ?>
                 <h5 class="mb-4">Expected shipping delivery</h5>
-                <p class="mb-0"> <?php echo  $order->shippingDay ?></p>
+                <p class="mb-0"> <?php echo  $order->shipping_day ?></p>
                 <?php endif;?>
             </div>
         </div>
@@ -83,11 +83,11 @@ $this->title = "Zamówienie";
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                         Products:
-                        <span><?php echo number_format($order->totalProductsCost,2) ?> $</span>
+                        <span><?php echo number_format($order->total_products_cost,2) ?> $</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                         Shipping
-                        <span><?php echo number_format($order->shippingCost,2) ?> $</span>
+                        <span><?php echo number_format($order->shipping_cost,2) ?> $</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                         <div>
@@ -96,7 +96,7 @@ $this->title = "Zamówienie";
                                 <p class="mb-0">(including taxes)</p>
                             </strong>
                         </div>
-                        <span><strong><?php echo number_format($order->shippingCost + $order->totalProductsCost,2) ?> $</strong></span>
+                        <span><strong><?php echo number_format($order->shipping_cost + $order->total_products_cost,2) ?> $</strong></span>
                     </li>
                 </ul>
             </div>

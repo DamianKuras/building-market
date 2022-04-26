@@ -6,6 +6,6 @@ use Exception;
 
 class ProductNotFoundException extends Exception
 {
-    protected $message = 'Produkt o podanym id nie istnieje';
+    protected $message = 'Product with specified id does not exits';
     protected $code = 404;
 }

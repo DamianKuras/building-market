@@ -11,7 +11,12 @@ class LoginForm extends Model
 
     public string $username = '';
     public string $password = '';
-
+    public static function types(): array{
+        return [
+            'username'=>\PDO::PARAM_STR,
+            'password'=>\PDO::PARAM_STR,
+        ];
+    }
     public function rules(): array
     {
         return [
@@ -26,7 +31,6 @@ class LoginForm extends Model
             'password' => 'Password'
         ];
     }
-
     public function login()
     {
         $user = User::findOne(['username' => $this->username]);
@@ -36,4 +40,5 @@ class LoginForm extends Model
         }
         return Application::$app->login($user);
     }
+
 }

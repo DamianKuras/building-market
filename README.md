@@ -6,14 +6,21 @@
 * [Implemented features](#implemented-features)
 
 ## General info
-This is a project of a shop containing building materials. It is created with PHP using the MVC design pattern. 
+This is a shop containing building materials. It was created with PHP using the MVC design pattern.
+Project was created to learn some PHP and learn about MVC design pattern.
+
+Project website:
+https://building-market.herokuapp.com/
+
+Blog post about this project:
+https://www.damiankuras.com/projects/building-market.html
 
 ## Technologies
 Project is created with:
-* PHP 
-* MYSQL
-* Bootstrap
-* javascript
+* PHP 8 
+* PostgreSQL Database
+* Bootstrap 5
+* Javascript and AJAX
 
 ## Implemented features
 * Creating user accounts 

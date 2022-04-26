@@ -2,15 +2,25 @@
 
 namespace app\base\db;
 
+use PDOException;
+
 class Database
 {
     public \PDO $pdo;
-    public function __construct(array $config)
+    public function __construct()
     {
-        $dsn = $config['dsn'] ?? '';
-        $user = $config['user'] ?? '';
-        $password = $config['password'] ?? '';
-        $this->pdo = new \PDO($dsn, $user, $password);
+        $db = parse_url(getenv("DATABASE_URL"));
+        
+        $this->pdo = new \PDO("pgsql:" . sprintf(
+            "host=%s;port=%s;user=%s;password=%s;dbname=%s",
+            $db["host"],
+            $db["port"],
+            $db["user"],
+            $db["pass"],
+            ltrim($db["path"], "/")
+        ));
+
+
         $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 

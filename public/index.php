@@ -7,18 +7,10 @@ use app\controllers\AdminController;
 use app\controllers\ProductController;
 use app\models\User;
 
-
-$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
-$dotenv->load();
 $config=[
     'userClass' => User::class,
-    'db'=>[
-        'dsn' => $_ENV['DB_DSN'],
-        'user' => $_ENV['DB_USER'],
-        'password' => $_ENV['DB_PASSWORD'],
-    ]
 ];
-$app = new Application(dirname(__DIR__), $config);
+$app = new Application(dirname(__DIR__),$config);
 
 
 $app->router->get('/', [SiteController::class, 'home']);
@@ -26,7 +18,7 @@ $app->router->get('/products', [ProductController::class, 'products']);
 $app->router->get('/contact', [SiteController::class, 'contact']);
 $app->router->post('/contact', [SiteController::class, 'contact']);
 
-$app->router->post('/searchProducts',[ProductController::class,'searchProdcuts']);
+$app->router->post('/search-products',[ProductController::class,'searchProducts']);//&
 
 $app->router->get('/login', [AuthController::class, 'login']);
 $app->router->post('/login', [AuthController::class, 'login']);
@@ -39,8 +31,8 @@ $app->router->post('/cart', [AuthController::class, 'cart']);
 
 $app->router->post('/cart/remove', [AuthController::class, 'cartRemove']);
 $app->router->post('/cart/add', [AuthController::class, 'cartAdd']);
-$app->router->post('/cart/setProductQuantity',[AuthController::class, 'cartSetProductQuantity']);
-$app->router->get('/shopingHistory', [AuthController::class, 'shopingHistory']);
+$app->router->post('/cart/set-product-quantity',[AuthController::class, 'cartSetProductQuantity']);//&
+$app->router->get('/shoping-history', [AuthController::class, 'shopingHistory']);//&
 
 $app->router->get('/order', [AuthController::class, 'orderDetails']);
 

@@ -4,34 +4,41 @@ namespace app\base\db;
 
 use app\base\Model;
 use app\base\Application;
+use app\base\exceptions\DBException;
 
 abstract class DbModel extends Model
 {
     abstract public static function tableName(): string;
     abstract public function attributes(): array;
-
+    abstract public static function types(): array;
     abstract public static function primaryKey(): string;
 
     public function save()
     {
-        $tableName = $this->tableName();
-        $attributes = $this->attributes();
-        $params = array_map(fn ($attr) => ":$attr", $attributes);
-        $statement = self::prepare("INSERT INTO $tableName (" . implode(',', $attributes) . ") VALUES (" . implode(',', $params) . ")");
-        foreach ($attributes as $attribute) {
-            $statement->bindValue(":$attribute", $this->{$attribute});
+        try {
+            $tableName = $this->tableName();
+            $attributes = $this->attributes();
+            $types = $this->types();
+            $params = array_map(fn ($attr) => ":$attr", $attributes);
+            $statement = self::prepare("INSERT INTO $tableName (" . implode(",", $attributes) . ") VALUES (" . implode(",", $params) . ")");
+            foreach ($attributes as $attribute) {
+                $statement->bindValue(":$attribute", $this->{$attribute}, $types[$attribute]);
+            }
+            $statement->execute();
+            return true;
+        } catch (\PDOException $e) {
+            throw new DBException();
         }
-        $statement->execute();
-        return true;
     }
-    public function saveWithId()
+    public function saveWithId() :int
     {
         $tableName = $this->tableName();
         $attributes = $this->attributes();
+        $types = $this->types();
         $params = array_map(fn ($attr) => ":$attr", $attributes);
-        $statement = self::prepare("INSERT INTO $tableName (" . implode(',', $attributes) . ") VALUES (" . implode(',', $params) . ")");
+        $statement = self::prepare("INSERT INTO $tableName (" . implode(",", $attributes) . ") VALUES (" . implode(",", $params) . ")");
         foreach ($attributes as $attribute) {
-            $statement->bindValue(":$attribute", $this->{$attribute});
+            $statement->bindValue(":$attribute", $this->{$attribute}, $types[$attribute]);
         }
         $statement->execute();
         return Application::$app->db->pdo->lastInsertId();
@@ -41,20 +48,21 @@ abstract class DbModel extends Model
         $tableName = static::tableName();
         $attributesWhere = array_keys($where);
         $attributesWhat = array_keys($what);
+        $types = static::types();
         $whereSql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributesWhere));
         $whatSql = implode(", ", array_map(fn ($attr) => "$attr = :$attr", $attributesWhat));
         $statement = self::prepare("UPDATE $tableName SET $whatSql WHERE $whereSql");
         foreach ($where as $key => $item) {
-            $statement->bindValue(":$key", $item);
+            $statement->bindValue(":$key", $item, $types[$key]);
         }
         foreach ($what as $key => $item) {
-            $statement->bindValue(":$key", $item);
+            $statement->bindValue(":$key", $item, $types[$key]);
         }
 
         $statement->execute();
         return true;
     }
-    public static function prepare($sql)
+    public static function prepare($sql): \PDOStatement
     {
         return Application::$app->db->pdo->prepare($sql);
     }
@@ -63,10 +71,11 @@ abstract class DbModel extends Model
     {
         $tableName = static::tableName();
         $attributes = array_keys($where);
+        $types = static::types();
         $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
         $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
         foreach ($where as $key => $item) {
-            $statement->bindValue(":$key", $item);
+            $statement->bindValue(":$key", $item, $types[$key]);
         }
         $statement->execute();
         return $statement->fetchObject(static::class);
@@ -82,26 +91,33 @@ abstract class DbModel extends Model
     {
         $tableName = static::tableName();
         $attributes = array_keys($where);
+        $types = static::types();
         $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
 
         $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
 
         foreach ($where as $key => $item) {
-            $statement->bindValue(":$key", $item);
+            $statement->bindValue(":$key", $item, $types[$key]);
         }
         $statement->execute();
         return $statement->fetchAll();
     }
-    public function findAllWhere($where):array{
+    public static function findAllWhere($where): array
+    {
+        error_log( print_r( $where, true ) );
         $tableName = static::tableName();
-        $attributes = array_keys($where);  
-        $sql = implode(" OR ", array_map(fn ($attr) => "$attr Like  '%' :$attr '%'", $attributes));
-
+        $attributes = array_keys($where);
+        $types = static::types();
+        $sql = implode(" OR ", array_map(fn ($attr) => " $attr like CONCAT('%',CAST(:$attr as VARCHAR),'%')", $attributes));
+        file_put_contents("php://stderr", "$tableName \n");
+        file_put_contents("php://stderr", "$sql \n");
         $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
-
         foreach ($where as $key => $item) {
-            $statement->bindValue(":$key", $item);
-        }  
+            file_put_contents("php://stderr", ":$key \n");
+            file_put_contents("php://stderr", "$item \n");
+            file_put_contents("php://stderr", "$types[$key] \n");
+            $statement->bindValue(":$key", $item, $types[$key]);
+        }
         $statement->execute();
         return $statement->fetchAll();
     }
@@ -115,11 +131,12 @@ abstract class DbModel extends Model
     public static function remove($where)
     {
         $tableName = static::tableName();
+        $types = static::types();
         $attributes = array_keys($where);
         $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
         $statement = self::prepare("DELETE FROM $tableName WHERE $sql");
         foreach ($where as $key => $item) {
-            $statement->bindValue(":$key", $item);
+            $statement->bindValue(":$key", $item, $types[$key]);
         }
         $statement->execute();
         return true;

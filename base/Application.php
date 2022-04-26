@@ -4,6 +4,7 @@ namespace app\base;
 use Exception;
 use app\base\db\Database;
 use app\base\db\DbModel;
+use app\base\exceptions\DBException;
 use app\odels\CartForm;
 
 class Application
@@ -21,7 +22,7 @@ class Application
     public ?DbModel $user;
     public View $view;
     
-    public function __construct($rootPath,array $config){
+    public function __construct($rootPath,$config){
         $this->userClass = $config['userClass'];
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;
@@ -30,7 +31,13 @@ class Application
         $this->session = new Session();
         $this->router = new Router($this->request,$this->response);
         $this->view = new View();
-        $this->db = new  Database($config['db']);
+
+        try{
+            $this->db = new Database();
+        }
+        catch(\PDOException $e){
+            throw new DBException();
+        }
         $primaryValue = $this->session->get('user');
         $primaryKey = $this->userClass::primaryKey();
         if($primaryValue){
@@ -46,9 +53,17 @@ class Application
             echo $this->router->resolve();
         }
         catch(Exception $e){
-            $this->response->setStatusCode($e->getCode());
+            $code = $e->getCode();
+            $message = $e->getMessage();
+            if(is_int($code)){
+                $this->response->setStatusCode($e->getCode());
+            }
+            else{
+                $this->response->setStatusCode(500);
+            }
+            
             echo $this->view->renderView('error', [
-                'exception' => $e
+                'exception' => $message
             ]);
         }
         
