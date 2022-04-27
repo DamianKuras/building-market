@@ -30,7 +30,7 @@ class Application
         $this->session = new Session();
         $this->router = new Router($this->request,$this->response);
         $this->view = new View();
-        $this->db = new  Database($config['db']);
+        $this->db = new Database();
         $primaryValue = $this->session->get('user');
         $primaryKey = $this->userClass::primaryKey();
         if($primaryValue){
