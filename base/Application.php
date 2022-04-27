@@ -4,7 +4,7 @@ namespace app\base;
 use Exception;
 use app\base\db\Database;
 use app\base\db\DbModel;
-use app\models\CartForm;
+use app\odels\CartForm;
 
 class Application
 {
