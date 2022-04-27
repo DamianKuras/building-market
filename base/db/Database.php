@@ -1,15 +1,13 @@
 <?php
 
 namespace app\base\db;
-
 class Database
 {
     public \PDO $pdo;
     public function __construct()
     {
         $db = parse_url(getenv("DATABASE_URL"));
-
-        $pdo = new PDO("pgsql:" . sprintf(
+        $this->pdo = new \PDO("pgsql:" . sprintf(
             "host=%s;port=%s;user=%s;password=%s;dbname=%s",
             $db["host"],
             $db["port"],
@@ -17,7 +15,6 @@ class Database
             $db["pass"],
             ltrim($db["path"], "/")
         ));
-        $this->pdo = $pdo;
         $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
