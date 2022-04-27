@@ -4,7 +4,7 @@ namespace app\base;
 use Exception;
 use app\base\db\Database;
 use app\base\db\DbModel;
-use app\odels\CartForm;
+use app\models\CartForm;
 
 class Application
 {
@@ -21,7 +21,8 @@ class Application
     public ?DbModel $user;
     public View $view;
     
-    public function __construct($rootPath){
+    public function __construct($rootPath,$config){
+        $this->userClass = $config['userClass'];
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;
         $this->request = new Request();

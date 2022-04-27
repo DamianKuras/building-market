@@ -7,7 +7,10 @@ use app\controllers\AdminController;
 use app\controllers\ProductController;
 use app\models\User;
 
-$app = new Application(dirname(__DIR__));
+$config=[
+    'userClass' => User::class,
+];
+$app = new Application(dirname(__DIR__),$config);
 
 
 $app->router->get('/', [SiteController::class, 'home']);
