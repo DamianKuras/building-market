@@ -21,8 +21,7 @@ class Application
     public ?DbModel $user;
     public View $view;
     
-    public function __construct($rootPath,array $config){
-        $this->userClass = $config['userClass'];
+    public function __construct($rootPath){
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;
         $this->request = new Request();

@@ -7,18 +7,7 @@ use app\controllers\AdminController;
 use app\controllers\ProductController;
 use app\models\User;
 
-
-$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
-$dotenv->load();
-$config=[
-    'userClass' => User::class,
-    'db'=>[
-        'dsn' => $_ENV['DB_DSN'],
-        'user' => $_ENV['DB_USER'],
-        'password' => $_ENV['DB_PASSWORD'],
-    ]
-];
-$app = new Application(dirname(__DIR__), $config);
+$app = new Application(dirname(__DIR__));
 
 
 $app->router->get('/', [SiteController::class, 'home']);
