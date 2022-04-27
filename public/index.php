@@ -1,5 +1,4 @@
 <?php
-/*
 require_once __DIR__.'/../vendor/autoload.php';
 use app\base\Application;
 use app\controllers\SiteController;
@@ -61,5 +60,3 @@ $app->router->post('/admin/add-product', [AdminController::class, 'addProduct'])
 $app->router->get('/admin/get-products-list', [AdminController::class, 'getProductList']);
 
 $app->run();
-*/
-echo '<p>Hello World</p>';
