@@ -18,11 +18,12 @@ abstract class DbModel extends Model
         $attributes = $this->attributes();
         $params = array_map(fn ($attr) => ":$attr", $attributes);
         $statement = self::prepare("INSERT INTO $tableName (" . '"' . implode('", "', $attributes) . '"' . ") VALUES (" . implode(',', $params) . ")");
-        file_put_contents("php://stderr", "$statement\n");
         foreach ($attributes as $attribute) {
             $statement->bindValue(":$attribute", $this->{$attribute});
         }
+        file_put_contents("php://stderr", "$statement->debugDumpParams()\n");
         $statement->execute();
+        
         return true;
     }
     public function saveWithId()
