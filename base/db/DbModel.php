@@ -21,7 +21,7 @@ abstract class DbModel extends Model
         foreach ($attributes as $attribute) {
             $statement->bindValue(":$attribute", $this->{$attribute});
         }
-        file_put_contents("php://stderr", "$statement->debugDumpParams()\n");
+        file_put_contents("php://stderr", "INSERT INTO $tableName (" . '"' . implode('", "', $attributes) . '"' . ") VALUES (" . implode(',', $params) . ")");
         $statement->execute();
         
         return true;
