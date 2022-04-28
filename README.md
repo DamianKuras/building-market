@@ -18,9 +18,9 @@ https://www.damiankuras.com/projects/building-market.html
 ## Technologies
 Project is created with:
 * PHP 8 
-* PostgreSQL
+* PostgreSQL Database
 * Bootstrap 5
-* Javascript
+* Javascript and AJAX
 
 ## Implemented features
 * Creating user accounts 

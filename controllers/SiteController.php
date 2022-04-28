@@ -14,9 +14,9 @@ class SiteController extends Controller
     public function home()
     {
         $products = new Product();
-        $onSale = $products->getAmount(10);
+        $featured = $products->getAmount(6);
         return $this->render('home', [
-            'onSales' => $onSale[0],
+            'featured' => $onSale[0],
         ]);
     }
     

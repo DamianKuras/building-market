@@ -7,9 +7,6 @@ use app\base\db\DbModel;
 
 class User extends DbModel
 {
-
-    const STATUS_INACTIVE = 0;
-    const STATUS_ACTIVE = 1;
     public int $id = 0;
     public string $username = '';
     public string $email = '';

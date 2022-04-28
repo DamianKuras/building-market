@@ -46,7 +46,7 @@ class AuthController extends Controller
         if ($request->isPost()) {
             $user->loadData($request->getBody());
             if ($user->validate() && $user->save()) {
-                Application::$app->session->setFlash('succes', 'Dziękujemy za rejestracje');
+                Application::$app->session->setFlash('succes', 'Thank you for registering');
                 if(isset($_SESSION['rdrurl'])){
                     $response->redirect($_SESSION['rdrurl']);
                 }
