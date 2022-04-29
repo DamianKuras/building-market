@@ -2,4 +2,4 @@
 $this->title = 'Contact';
 ?>
 
-<?php echo $exception?>
+<h3 class="text-danger"><?php echo $exception?></h3>
