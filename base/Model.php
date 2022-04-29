@@ -12,7 +12,7 @@ class Model
     const RULE_UNIQUE = 'unique';
 
     public array $errors = [];
-    public array $types=[];
+    
 
     public function loadData($data)
     {
