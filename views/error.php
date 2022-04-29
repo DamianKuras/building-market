@@ -1,1 +1,5 @@
-<h1>Error while processing your request </h1>
+<?php
+$this->title = 'Contact';
+?>
+
+<?php echo $exception?>
