@@ -17,7 +17,7 @@ class User extends DbModel
         'username'=>\PDO::PARAM_STR,
         'email'=> \PDO::PARAM_STR,
         'password'=>\PDO::PARAM_STR,
-        'isadmin'=>\PDO::PARAM_BOOL
+        'isadmin'=>\PDO::PARAM_BOOL,
     );
     public function save()
     {

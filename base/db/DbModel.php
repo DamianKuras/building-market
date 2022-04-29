@@ -23,6 +23,8 @@ abstract class DbModel extends Model
         foreach ($attributes as $attribute) {
             $statement->bindValue(":$attribute", $this->{$attribute},$types[$attribute]);
             file_put_contents("php://stderr", "$attribute\n");
+            $tmp=gettype($attribute);
+            file_put_contents("php://stderr", "$tmp\n");
         }
         $statement->execute();
         return true;
