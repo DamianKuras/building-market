@@ -37,7 +37,7 @@ class User extends DbModel
     }
     public function attributes(): array
     {
-        return ['username', 'email', 'password', 'isAdmin'];
+        return ['username', 'email', 'password', 'isadmin'];
     }
 
     public function labels(): array

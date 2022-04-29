@@ -4,6 +4,7 @@ namespace app\base;
 use Exception;
 use app\base\db\Database;
 use app\base\db\DbModel;
+use app\base\exceptions\DBException;
 use app\odels\CartForm;
 
 class Application
@@ -35,10 +36,7 @@ class Application
             $this->db = new Database();
         }
         catch(\PDOException $e){
-            $this->response->setStatusCode(500);
-            echo $this->view->renderView('error', [
-                'exception' => $e
-            ]);
+            throw new DBException();
         }
         $primaryValue = $this->session->get('user');
         $primaryKey = $this->userClass::primaryKey();
