@@ -14,6 +14,7 @@ abstract class DbModel extends Model
 
     public function save()
     {
+        try {
         $tableName = $this->tableName();
         $attributes = $this->attributes();
         $params = array_map(fn ($attr) => ":$attr", $attributes);
@@ -23,13 +24,16 @@ abstract class DbModel extends Model
         }
         $statement->execute();
         return true;
+        } catch (\PDOException $e) {
+            echo $e->getMessage();
+        }
     }
     public function saveWithId()
     {
         $tableName = $this->tableName();
         $attributes = $this->attributes();
         $params = array_map(fn ($attr) => ":$attr", $attributes);
-        $statement = self::prepare("INSERT INTO $tableName (" . '"' . implode('", "', $attributes) . '"' . ") VALUES (" . implode(',', $params) . ")");
+        $statement = self::prepare("INSERT INTO $tableName (" .'"' . implode('", "', $attributes) . '"'. ") VALUES (" . implode(',', $params) . ")");
         foreach ($attributes as $attribute) {
             $statement->bindValue(":$attribute", $this->{$attribute});
         }

@@ -30,7 +30,16 @@ class Application
         $this->session = new Session();
         $this->router = new Router($this->request,$this->response);
         $this->view = new View();
-        $this->db = new Database();
+
+        try{
+            $this->db = new Database();
+        }
+        catch(\PDOException $e){
+            $this->response->setStatusCode(500);
+            echo $this->view->renderView('error', [
+                'exception' => $e
+            ]);
+        }
         $primaryValue = $this->session->get('user');
         $primaryKey = $this->userClass::primaryKey();
         if($primaryValue){
