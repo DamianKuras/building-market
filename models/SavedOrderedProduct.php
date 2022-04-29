@@ -8,6 +8,13 @@ class SavedOrderedProduct extends DbModel{
     public int $user_id;
     public int $product_id;
     public int $quantity;
+    public function types(): array{
+        return [
+            'user_id' =>  \PDO::PARAM_STR,
+            'product_id' => \PDO::PARAM_STR,
+            'quantity' => \PDO::PARAM_STR,
+        ];
+    }
     public function rules(): array
     {
         return [

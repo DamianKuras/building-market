@@ -13,6 +13,13 @@ class OrderedItems extends DbModel
     public int $order_id = 0;
     public int $ordered_product_id = 0;
     public int $quantity = 0;
+    public function types(): array{
+        return [
+            'order_id'=>\PDO::PARAM_INT,
+            'ordered_product_id'=> \PDO::PARAM_INT,
+            'quantity'=>\PDO::PARAM_INT,
+        ];
+    }
     public static function tableName(): string
     {
         return 'ordered_items';

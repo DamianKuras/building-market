@@ -23,6 +23,17 @@ class Orders extends DbModel
     public int $totalProductsCost=0;
     public int $totalIncludingTaxes = 0;
 
+    public function types(): array{
+        return [
+            'id' =>  \PDO::PARAM_STR,
+            'user_id' => \PDO::PARAM_STR,
+            'status' => \PDO::PARAM_STR,
+            'time' => \PDO::PARAM_STR,
+            'shippingDay' =>\PDO::PARAM_STR,
+            'shippingCost' => \PDO::PARAM_STR,
+            'totalProductsCost' => \PDO::PARAM_STR,
+        ];
+    }
     public function rules(): array
     {
         return [

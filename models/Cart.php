@@ -11,10 +11,12 @@ class Cart extends DbModel
     public int $user_id=0;
     public int $product_id=0;
     public int $quantity=0;
-    public function __construct(){
-        $types['user_id']=\PDO::PARAM_INT;
-        $types['product_id']=\PDO::PARAM_INT;
-        $types['quantity']=\PDO::PARAM_INT;
+    public function types(): array{
+        return [
+            'user_id'=>\PDO::PARAM_INT,
+            'product_id'=> \PDO::PARAM_INT,
+            'quantity'=>\PDO::PARAM_INT,
+        ];
     }
     public function rules(): array
     {

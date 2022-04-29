@@ -22,6 +22,17 @@ class Product extends DbModel
     public string $brand = '';
     public string $description = '';
     public int $quantityInStock = 0;
+    public function types(): array{
+        return [
+            'name' => \PDO::PARAM_STR,
+            'price' => \PDO::PARAM_STR,
+            'category' => \PDO::PARAM_STR,
+            'imageLink' => \PDO::PARAM_STR,
+            'brand' => \PDO::PARAM_STR,
+            'quantityInStock' => \PDO::PARAM_STR,
+            'description' => \PDO::PARAM_STR,
+        ];
+    }
     public function save()
     {
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
