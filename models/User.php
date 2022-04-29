@@ -13,7 +13,7 @@ class User extends DbModel
     public string $password = '';
     public string $passwordConfirm = '';
     public bool $isadmin = false;
-    public $types= array(
+    public array $types= array(
         'username'=>\PDO::PARAM_STR,
         'email'=> \PDO::PARAM_STR,
         'password'=>\PDO::PARAM_STR,
