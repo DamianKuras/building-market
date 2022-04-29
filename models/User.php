@@ -13,11 +13,11 @@ class User extends DbModel
     public string $password = '';
     public string $passwordConfirm = '';
     public bool $isadmin = false;
-    public function __construct
+    public function __construct()
     {
         $types['username']=PDO::PARAM_STR;
         $types['email']=PDO::PARAM_STR;
-        $types['password']PDO::PARAM_STR;
+        $types['password']=PDO::PARAM_STR;
         $types['isadmin']=PDO::PARAM_BOOL;
     }
     public function save()
