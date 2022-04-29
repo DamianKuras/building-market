@@ -13,14 +13,19 @@ class User extends DbModel
     public string $password = '';
     public string $passwordConfirm = '';
     public bool $isadmin = false;
-    public array $types= array(
-        'username'=>\PDO::PARAM_STR,
-        'email'=> \PDO::PARAM_STR,
-        'password'=>\PDO::PARAM_STR,
-        'isadmin'=>\PDO::PARAM_BOOL,
-    );
+    public function types(): array{
+        return [
+            'username'=>\PDO::PARAM_STR,
+            'email'=> \PDO::PARAM_STR,
+            'password'=>\PDO::PARAM_STR,
+            'isadmin'=>\PDO::PARAM_BOOL,
+        ]
+    }
     public function save()
     {
+        foreach ($types as $key => $value) {
+            # code...
+        }
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         return parent::save();
     }

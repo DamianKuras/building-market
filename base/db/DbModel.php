@@ -10,7 +10,7 @@ abstract class DbModel extends Model
 {
     abstract public static function tableName(): string;
     abstract public function attributes(): array;
-    public array $types=[];
+    abstract public function types():array;
     abstract public static function primaryKey(): string;
 
     public function save()
@@ -18,6 +18,7 @@ abstract class DbModel extends Model
         try {
         $tableName = $this->tableName();
         $attributes = $this->attributes();
+        $types = $this->types();
         $params = array_map(fn ($attr) => ":$attr", $attributes);
         $statement = self::prepare("INSERT INTO $tableName (" . implode(",", $attributes) . ") VALUES (" . implode(",", $params) . ")");
         foreach ($attributes as $attribute) {
