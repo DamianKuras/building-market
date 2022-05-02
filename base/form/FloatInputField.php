@@ -7,13 +7,13 @@ use app\base\form\BaseField;
 
 class FloatInputField extends BaseField
 {
-    private float $min = 0;
-    private float $max = 10000;
+    private float $min = 0.00;
+    private float $max = 10000.00;
     
     public function renderInput(): string
     {
         return sprintf(
-            '<input type="number" min="%s" max="%s" name="%s" step="%s" value="%s" class="%s">',
+            '<input type="number" min="%s" max="%s" name="%s" step="%s" value="%s" class="form-control %s">',
             $this->min,
             $this->max,
             $this->attribute,
