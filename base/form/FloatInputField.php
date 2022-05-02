@@ -9,7 +9,6 @@ class FloatInputField extends BaseField
 {
     private float $min = 0.00;
     private float $max = 10000.00;
-    private float $default = 15.15;
     
     public function renderInput(): string
     {
@@ -19,7 +18,7 @@ class FloatInputField extends BaseField
             $this->max,
             $this->attribute,
             0.01,
-            $default,
+            $this->model->{$this->attribute},
             $this->model->hasError($this->attribute) ? 'is-invalid' : '',
         );
     }
