@@ -130,7 +130,7 @@ class Product extends DbModel
         return true;
     }
     public function searchAllProductsWithText(string $searchText): array{
-        $products = parent::findAllWhere(['name'=>$searchText],['category'=>$searchText],['description'=>$searchText]);
+        $products = parent::findAllWhere([['name'=>$searchText],['category'=>$searchText],['description'=>$searchText]]);
         return $products;
     }
 }
