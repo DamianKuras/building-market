@@ -104,6 +104,7 @@ abstract class DbModel extends Model
     }
     public static function findAllWhere($where): array
     {
+        error_log( print_r( $where, true ) );
         $tableName = static::tableName();
         $attributes = array_keys($where);
         $types = static::types();
@@ -112,7 +113,7 @@ abstract class DbModel extends Model
         file_put_contents("php://stderr", "$sql \n");
         $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
         foreach ($where as $key => $item) {
-            file_put_contents("php://stderr", "$key \n");
+            file_put_contents("php://stderr", ":$key \n");
             file_put_contents("php://stderr", "$item \n");
             file_put_contents("php://stderr", "$types[$key] \n");
             $statement->bindValue(":$key", $item, $types[$key]);
