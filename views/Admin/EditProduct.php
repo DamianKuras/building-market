@@ -2,8 +2,9 @@
 use app\base\form\Form;
 use app\base\form\TextareaField;
 use app\base\form\NumberInputField;
+use app\base\form\FloatInputField;
 
-$this->title = 'Edycja produktu';
+$this->title = 'Edit Product';
 ?>
 <h1> Edytuj </h1>
 <?php $form = app\base\form\Form::begin('', "post") ?>
