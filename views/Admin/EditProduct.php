@@ -9,9 +9,9 @@ $this->title = 'Edycja produktu';
 <?php $form = app\base\form\Form::begin('', "post") ?>
 <input type="hidden" id="id" name="id" value=<?php echo $model->id?> />
 <?php echo $form->field($model, 'name') ?>
-<?php echo $form->field($model, 'price')->numberField() ?>
+<?php echo new FloatInputField($model, 'price') ?>
 <?php echo $form->field($model, 'category') ?>
-<?php echo $form->field($model, 'imageLink') ?>
+<?php echo $form->field($model, 'image_link') ?>
 <?php echo $form->field($model, 'brand') ?>
 <?php echo $form->field($model, 'quantity_in_stock')->numberField() ?>
 <?php echo new TextareaField($model, 'description') ?>
