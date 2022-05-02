@@ -3,7 +3,7 @@
 use app\base\form\Form;
 use app\base\form\TextareaField;
 use app\base\form\NumberInputField;
-
+use app\base\form\FloatInputField;
 $this->title = 'Adding product';
 ?>
 <h1> Adding product </h1>
