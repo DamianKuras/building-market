@@ -10,10 +10,6 @@ class FloatInputField extends BaseField
     private float $min = 0;
     private float $max = 10000;
     
-    public function __construct(Model $model, int $attribute)
-    {
-        parent::__construct($model, $attribute);
-    }
     public function renderInput(): string
     {
         return sprintf(
