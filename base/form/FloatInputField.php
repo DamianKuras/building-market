@@ -5,10 +5,11 @@ namespace app\base\form;
 use app\base\Model;
 use app\base\form\BaseField;
 
-class NumberInputField extends BaseField
+class FloatInputField extends BaseField
 {
-    private int $min = 0;
-    private int $max = 10000;
+    private float $min = 0;
+    private float $max = 10000;
+    
     public function __construct(Model $model, int $attribute)
     {
         parent::__construct($model, $attribute);
@@ -20,7 +21,7 @@ class NumberInputField extends BaseField
             $this->min,
             $this->max,
             $this->attribute,
-            1,
+            0.01,
             $this->attribute,
             $this->model->hasError($this->attribute) ? 'is-invalid' : '',
         );
