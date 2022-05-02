@@ -11,7 +11,7 @@ class Cart extends DbModel
     public int $user_id=0;
     public int $product_id=0;
     public int $quantity=0;
-    public function types(): array{
+    public static function types(): array{
         return [
             'user_id'=>\PDO::PARAM_INT,
             'product_id'=> \PDO::PARAM_INT,

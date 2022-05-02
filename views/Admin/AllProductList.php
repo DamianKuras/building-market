@@ -1,6 +1,6 @@
 <?php
 
-$this->title = 'Lista prouktów';
+$this->title = 'Product List';
 ?>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-2 mt-2">
     <?php foreach ($productModels as $model) { ?>
@@ -33,7 +33,6 @@ $this->title = 'Lista prouktów';
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById(product_id).style.display = 'none';
-
             }
         }
         var requestText = "/admin/remove-product";

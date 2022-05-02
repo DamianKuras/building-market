@@ -8,7 +8,12 @@ class ContactForm extends Model
 {
     public string $email = '';
     public string $body = '';
-
+    public static function types(): array{
+        return [
+            'email'=>\PDO::PARAM_STR,
+            'body'=>\PDO::PARAM_STR,
+        ];
+    }
     public function rules(): array
     {
         return [

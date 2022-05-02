@@ -4,7 +4,7 @@ $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
 ?>
 <div class="row">
   <div class="col-md-6 mb-4">
-    <img src=<?php echo $model->imageLink ?> class="d-block w-100" alt="...">
+    <img src=<?php echo $model->image_link ?> class="d-block w-100" alt="...">
   </div>
   <div class="col-md-6">
 
@@ -13,19 +13,19 @@ $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
     <p><span class="mr-1"><strong><?php echo $model->price ?>$</strong></span></p>
     <p class="pt-1"><?php echo $model->description ?></p>
     <hr>
-    <p>Avalible: <?php echo $model->quantityInStock ?></p>
+    <p>Available: <?php echo $model->quantity_in_stock ?></p>
     <div class="row">
       <div class="input-group col-lg m-2 ">
         <button class="btn btn-secondary" onclick="decrementQuantity()"><i class="fas fa-minus"></i></button>
-        <input class="form-control text-center" type="number" id="quantity" min="0" max="<?php echo $model->quantityInStock ?>" value="1" class="product-add-input" />
+        <input class="form-control text-center" type="number" id="quantity" min="0" max="<?php echo $model->quantity_in_stock ?>" value="1" class="product-add-input" />
         <button class="btn btn-secondary" onclick="incrementQuantity()"><i class="fas fa-plus"></i></button>
       </div>
       <div class="col-lg m-2">
         <button type="button" class="btn btn-primary" onClick="addToCart()"><i class="fas fa-shopping-cart mx-2"></i>Add to cart</button>
       </div>
-      <div class="col-lg m-2">
-        <p id="feedback" class=""></p>
-      </div>
+    </div>
+    <div class="col-lg m-2">
+      <p id="feedback" class=""></p>
     </div>
 
   </div>
@@ -34,12 +34,13 @@ $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
 
 <script>
   function addToCart() {
-    if (document.getElementById('quantity').value < 1) {
+    var quant = parseInt(document.getElementById('quantity').value);
+    if (quant < 1) {
       document.getElementById("feedback").style.color = 'red';
       document.getElementById("feedback").innerHTML = 'Quantity must be greater than 0';
       return;
     }
-    if (document.getElementById('quantity').value > <?php echo $model->quantityInStock ?>) {
+    if (quant > <?php echo $model->quantity_in_stock ?>) {
       document.getElementById("feedback").style.color = 'red';
       document.getElementById("feedback").innerHTML = 'We dont have this many. Select lower amount';
       return;
@@ -54,12 +55,10 @@ $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
       if (this.readyState == 4 && this.status == 403) {
         document.getElementById("feedback").style.color = 'red';
         document.getElementById("feedback").innerHTML = 'U need to sing in first.';
-
       }
     }
-    var quant = document.getElementById('quantity').value;
-    var requestText = "/cart/add";
 
+    var requestText = "/cart/add";
     xhttp.open("POST", requestText, true);
     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhttp.send("product_id=" + <?php echo $model->id ?> + "&quantity=" + quant);
@@ -67,7 +66,7 @@ $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
 
   function incrementQuantity() {
     var current = parseInt(document.getElementById("quantity").value);
-    if (current < <?php echo $model->quantityInStock ?>)
+    if (current < <?php echo $model->quantity_in_stock ?>)
       document.getElementById("quantity").value = current + 1;
   }
 

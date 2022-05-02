@@ -53,9 +53,17 @@ class Application
             echo $this->router->resolve();
         }
         catch(Exception $e){
-            $this->response->setStatusCode($e->getCode());
+            $code = $e->getCode();
+            $message = $e->getMessage();
+            if(is_int($code)){
+                $this->response->setStatusCode($e->getCode());
+            }
+            else{
+                $this->response->setStatusCode(500);
+            }
+            
             echo $this->view->renderView('error', [
-                'exception' => $e->getMessage()
+                'exception' => $message
             ]);
         }
         

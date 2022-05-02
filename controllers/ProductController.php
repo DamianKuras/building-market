@@ -39,10 +39,9 @@ class ProductController extends Controller
         if(!array_key_exists('searchText',$body) || $body['searchText']===""){
             return $response->redirect('/products');
         }
+        $searchText =$body['searchText'];
         $product= new Product();
-
-        $productsModels= $product->searchAllProductsWithText($body['searchText']);
-
+        $productsModels= $product->searchAllProductsWithText($searchText);
         return $this->render('products',[
             'products'=>$productsModels,
         ]);

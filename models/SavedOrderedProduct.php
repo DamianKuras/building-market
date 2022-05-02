@@ -8,11 +8,12 @@ class SavedOrderedProduct extends DbModel{
     public int $user_id;
     public int $product_id;
     public int $quantity;
-    public function types(): array{
+    public static function types(): array{
         return [
-            'user_id' =>  \PDO::PARAM_STR,
-            'product_id' => \PDO::PARAM_STR,
-            'quantity' => \PDO::PARAM_STR,
+            'id'=>\PDO::PARAM_INT,
+            'user_id' =>  \PDO::PARAM_INT,
+            'product_id' => \PDO::PARAM_INT,
+            'quantity' => \PDO::PARAM_INT,
         ];
     }
     public function rules(): array
@@ -41,7 +42,6 @@ class SavedOrderedProduct extends DbModel{
     }
     public function removeFromCart(int $user_id, int $product_id){
         Cart::remove(['user_id'=> $user_id,'product_id'=>$product_id]);
-        
     }
 
 

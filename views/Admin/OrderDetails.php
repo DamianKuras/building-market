@@ -1,5 +1,5 @@
 <?php
-$this->title = "Zamówienie";
+$this->title = "Order" . $order->id;
 use app\models\Orders;
 ?>
 

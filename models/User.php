@@ -4,7 +4,6 @@ namespace app\models;
 
 use app\base\db\DbModel;
 
-
 class User extends DbModel
 {
     public int $id = 0;
@@ -13,8 +12,9 @@ class User extends DbModel
     public string $password = '';
     public string $passwordConfirm = '';
     public bool $isadmin = false;
-    public function types(): array{
+    public static function types(): array{
         return [
+            'id'=>\PDO::PARAM_INT,
             'username'=>\PDO::PARAM_STR,
             'email'=> \PDO::PARAM_STR,
             'password'=>\PDO::PARAM_STR,
@@ -23,9 +23,6 @@ class User extends DbModel
     }
     public function save()
     {
-        foreach ($types as $key => $value) {
-            # code...
-        }
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         return parent::save();
     }
@@ -67,6 +64,7 @@ class User extends DbModel
 
     public function isAdmin()
     {
-        return $this->isAdmin;
+        return $this->isadmin;
     }
+
 }

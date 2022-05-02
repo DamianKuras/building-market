@@ -13,8 +13,9 @@ class OrderedItems extends DbModel
     public int $order_id = 0;
     public int $ordered_product_id = 0;
     public int $quantity = 0;
-    public function types(): array{
+    public static function types(): array{
         return [
+            'id'=>\PDO::PARAM_INT,
             'order_id'=>\PDO::PARAM_INT,
             'ordered_product_id'=> \PDO::PARAM_INT,
             'quantity'=>\PDO::PARAM_INT,

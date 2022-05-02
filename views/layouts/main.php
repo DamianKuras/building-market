@@ -37,7 +37,7 @@ use app\base\Application;
                 </ul>
 
 
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="/searchProducts" method="POST">
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="/search-products" method="POST">
                     <div class="input-group">
                         <input type="search" name="searchText" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
                         <button type="submit" class="btn btn-primary">

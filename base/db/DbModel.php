@@ -10,37 +10,35 @@ abstract class DbModel extends Model
 {
     abstract public static function tableName(): string;
     abstract public function attributes(): array;
-    abstract public function types():array;
+    abstract public static function types(): array;
     abstract public static function primaryKey(): string;
 
     public function save()
     {
         try {
+            $tableName = $this->tableName();
+            $attributes = $this->attributes();
+            $types = $this->types();
+            $params = array_map(fn ($attr) => ":$attr", $attributes);
+            $statement = self::prepare("INSERT INTO $tableName (" . implode(",", $attributes) . ") VALUES (" . implode(",", $params) . ")");
+            foreach ($attributes as $attribute) {
+                $statement->bindValue(":$attribute", $this->{$attribute}, $types[$attribute]);
+            }
+            $statement->execute();
+            return true;
+        } catch (\PDOException $e) {
+            throw new DBException();
+        }
+    }
+    public function saveWithId() :int
+    {
         $tableName = $this->tableName();
         $attributes = $this->attributes();
         $types = $this->types();
         $params = array_map(fn ($attr) => ":$attr", $attributes);
         $statement = self::prepare("INSERT INTO $tableName (" . implode(",", $attributes) . ") VALUES (" . implode(",", $params) . ")");
         foreach ($attributes as $attribute) {
-            $statement->bindValue(":$attribute", $this->{$attribute},$types[$attribute]);
-            file_put_contents("php://stderr", "$attribute\n");
-            $tmp=gettype($attribute);
-            file_put_contents("php://stderr", "$tmp\n");
-        }
-        $statement->execute();
-        return true;
-        } catch (\PDOException $e) {
-            throw new DBException();
-        }
-    }
-    public function saveWithId()
-    {
-        $tableName = $this->tableName();
-        $attributes = $this->attributes();
-        $params = array_map(fn ($attr) => ":$attr", $attributes);
-        $statement = self::prepare("INSERT INTO $tableName (" . implode(",", $attributes) . ") VALUES (" . implode(",", $params) . ")");
-        foreach ($attributes as $attribute) {
-            $statement->bindValue(":$attribute", $this->{$attribute});
+            $statement->bindValue(":$attribute", $this->{$attribute}, $types[$attribute]);
         }
         $statement->execute();
         return Application::$app->db->pdo->lastInsertId();
@@ -50,20 +48,21 @@ abstract class DbModel extends Model
         $tableName = static::tableName();
         $attributesWhere = array_keys($where);
         $attributesWhat = array_keys($what);
+        $types = static::types();
         $whereSql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributesWhere));
         $whatSql = implode(", ", array_map(fn ($attr) => "$attr = :$attr", $attributesWhat));
         $statement = self::prepare("UPDATE $tableName SET $whatSql WHERE $whereSql");
         foreach ($where as $key => $item) {
-            $statement->bindValue(":$key", $item);
+            $statement->bindValue(":$key", $item, $types[$key]);
         }
         foreach ($what as $key => $item) {
-            $statement->bindValue(":$key", $item);
+            $statement->bindValue(":$key", $item, $types[$key]);
         }
 
         $statement->execute();
         return true;
     }
-    public static function prepare($sql)
+    public static function prepare($sql): \PDOStatement
     {
         return Application::$app->db->pdo->prepare($sql);
     }
@@ -72,10 +71,11 @@ abstract class DbModel extends Model
     {
         $tableName = static::tableName();
         $attributes = array_keys($where);
+        $types = static::types();
         $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
         $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
         foreach ($where as $key => $item) {
-            $statement->bindValue(":$key", $item);
+            $statement->bindValue(":$key", $item, $types[$key]);
         }
         $statement->execute();
         return $statement->fetchObject(static::class);
@@ -91,26 +91,26 @@ abstract class DbModel extends Model
     {
         $tableName = static::tableName();
         $attributes = array_keys($where);
+        $types = static::types();
         $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
 
         $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
 
         foreach ($where as $key => $item) {
-            $statement->bindValue(":$key", $item);
+            $statement->bindValue(":$key", $item, $types[$key]);
         }
         $statement->execute();
         return $statement->fetchAll();
     }
-    public function findAllWhere($where): array
+    public static function findAllWhere($where): array
     {
         $tableName = static::tableName();
         $attributes = array_keys($where);
-        $sql = implode(" OR ", array_map(fn ($attr) => "$attr Like  '%' :$attr '%'", $attributes));
-
+        $types = static::types();
+        $sql = implode(" OR ", array_map(fn ($attr) => "$attr Like '%:$attr%'", $attributes));
         $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
-
         foreach ($where as $key => $item) {
-            $statement->bindValue(":$key", $item);
+            $statement->bindValue(":$key", $item, $types[$key]);
         }
         $statement->execute();
         return $statement->fetchAll();
@@ -125,11 +125,12 @@ abstract class DbModel extends Model
     public static function remove($where)
     {
         $tableName = static::tableName();
+        $types = static::types();
         $attributes = array_keys($where);
         $sql = implode(" AND ", array_map(fn ($attr) => "$attr = :$attr", $attributes));
         $statement = self::prepare("DELETE FROM $tableName WHERE $sql");
         foreach ($where as $key => $item) {
-            $statement->bindValue(":$key", $item);
+            $statement->bindValue(":$key", $item, $types[$key]);
         }
         $statement->execute();
         return true;
