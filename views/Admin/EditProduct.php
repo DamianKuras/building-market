@@ -13,7 +13,7 @@ $this->title = 'Edycja produktu';
 <?php echo $form->field($model, 'category') ?>
 <?php echo $form->field($model, 'imageLink') ?>
 <?php echo $form->field($model, 'brand') ?>
-<?php echo $form->field($model, 'quantityInStock')->numberField() ?>
+<?php echo $form->field($model, 'quantity_in_stock')->numberField() ?>
 <?php echo new TextareaField($model, 'description') ?>
 <button type="submit" class="btn btn-primary mb-5" value="Submit">submit</button>
 <?php app\base\form\Form::end() ?>

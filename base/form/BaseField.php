@@ -9,7 +9,7 @@ abstract class BaseField
     abstract public function renderInput(): string;
     public Model $model;
     public $attribute;
-    public function __construct(Model $model, $attribute,)
+    public function __construct(Model $model, $attribute)
     {
         $this->model = $model;
         $this->attribute = $attribute;

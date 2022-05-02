@@ -11,9 +11,9 @@ $this->title = 'Adding product';
 <?php echo $form->field($model, 'name') ?>
 <?php echo $form->field($model, 'price')->numberField() ?>
 <?php echo $form->field($model, 'category') ?>
-<?php echo $form->field($model, 'imageLink') ?>
+<?php echo $form->field($model, 'image_link') ?>
 <?php echo $form->field($model, 'brand') ?>
-<?php echo $form->field($model, 'quantityInStock')->numberField() ?>
+<?php echo $form->field($model, 'quantity_in_stock')->numberField() ?>
 <?php echo new TextareaField($model, 'description') ?>
 <button type="submit" class="btn btn-primary mb-5" value="Submit">Submit</button>
 <?php app\base\form\Form::end() ?>
