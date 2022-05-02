@@ -33,13 +33,13 @@ class ProductController extends Controller
             'products' =>  $productsModels,
         ]);
     }
-    public function searchProdcuts(Request $request,Response $response){
+    public function searchProducts(Request $request,Response $response){
 
         $body=$request->getBody();
         if(!array_key_exists('searchText',$body) || $body['searchText']===""){
             return $response->redirect('/products');
         }
-        $searchText =$body['searchText'];
+        $searchText = $body['searchText'];
         $product= new Product();
         $productsModels= $product->searchAllProductsWithText($searchText);
         return $this->render('products',[

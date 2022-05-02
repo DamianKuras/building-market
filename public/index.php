@@ -18,7 +18,7 @@ $app->router->get('/products', [ProductController::class, 'products']);
 $app->router->get('/contact', [SiteController::class, 'contact']);
 $app->router->post('/contact', [SiteController::class, 'contact']);
 
-$app->router->post('/search-products',[ProductController::class,'searchProdcuts']);//&
+$app->router->post('/search-products',[ProductController::class,'searchProducts']);//&
 
 $app->router->get('/login', [AuthController::class, 'login']);
 $app->router->post('/login', [AuthController::class, 'login']);
