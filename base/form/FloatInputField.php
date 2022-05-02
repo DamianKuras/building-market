@@ -18,7 +18,7 @@ class FloatInputField extends BaseField
             $this->max,
             $this->attribute,
             0.01,
-            $this->attribute,
+            15.00,
             $this->model->hasError($this->attribute) ? 'is-invalid' : '',
         );
     }
