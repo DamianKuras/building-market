@@ -31,7 +31,7 @@ $this->title = 'Cart';
                                         </div>
 
                                         <p class="mb-0">Price for one: <span><strong id="summary"><span><?php echo $model['price'] ?></span> $</strong></span></p class="mb-0">
-                                        <p class="mb-0">Total: <span><strong><span class="productTotal"><?php echo number_format($model['price'] * $model['quantity'], 2) ?></span>$</strong></span></p class="mb-0">
+                                        <p class="mb-0">Total: <span><strong><span class="productTotal"><?php echo $model['price'] * $model['quantity'], 2 ?></span>$</strong></span></p class="mb-0">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
@@ -136,8 +136,8 @@ $this->title = 'Cart';
 
         function QuantityChange() {
             var amount=event.currentTarget.value;
-            var price = parseFloat(event.currentTarget.parentElement.parentElement.children[1].children[0].children[0].children[0].innerHTML);
-            var totalForProduct = amount * price;
+            var price = parseInt(event.currentTarget.parentElement.parentElement.children[1].children[0].children[0].children[0].innerHTML);
+            var totalForProduct = (amount * price);
             event.currentTarget.parentElement.parentElement.children[2].children[0].children[0].children[0].innerHTML = totalForProduct;
             handleProductQuantityChange();
             var productId=parseInt(event.currentTarget.parentElement.children[3].value);
@@ -147,9 +147,8 @@ $this->title = 'Cart';
 
         function handleProductQuantityChange() {
             const sum = [...document.querySelectorAll('span.productTotal')].reduce((acc, valueSpan) => {
-                return acc + parseFloat(valueSpan.innerHTML)
+                return acc + parseInt(valueSpan.innerHTML)
             }, 0)
-
             document.getElementById("totalPrice").innerHTML = sum;
         }
 
