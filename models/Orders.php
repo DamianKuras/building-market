@@ -29,8 +29,8 @@ class Orders extends DbModel
             'status' => \PDO::PARAM_INT,
             'time' => \PDO::PARAM_STR,
             'shipping_day' =>\PDO::PARAM_STR,
-            'shipping_cost' => \PDO::PARAM_STR,
-            'total_products_cost' => \PDO::PARAM_STR,
+            'shipping_cost' => \PDO::PARAM_INT,
+            'total_products_cost' => \PDO::PARAM_INT,
         ];
     }
     public function rules(): array

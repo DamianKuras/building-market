@@ -26,7 +26,7 @@ class Product extends DbModel
         return [
             'id'=>\PDO::PARAM_INT,
             'name' => \PDO::PARAM_STR,
-            'price' => \PDO::PARAM_STR,
+            'price' => \PDO::PARAM_INT,
             'category' => \PDO::PARAM_STR,
             'image_link' => \PDO::PARAM_STR,
             'brand' => \PDO::PARAM_STR,
