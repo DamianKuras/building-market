@@ -136,8 +136,8 @@ $this->title = 'Cart';
 
         function QuantityChange() {
             var amount=event.currentTarget.value;
-            var price = parseFloat(event.currentTarget.parentElement.parentElement.children[1].children[0].children[0].children[0].innerHTML);
-            var totalForProduct = amount * price;
+            var price = parseInt(event.currentTarget.parentElement.parentElement.children[1].children[0].children[0].children[0].innerHTML);
+            var totalForProduct = (amount * price);
             event.currentTarget.parentElement.parentElement.children[2].children[0].children[0].children[0].innerHTML = totalForProduct;
             handleProductQuantityChange();
             var productId=parseInt(event.currentTarget.parentElement.children[3].value);
@@ -147,9 +147,8 @@ $this->title = 'Cart';
 
         function handleProductQuantityChange() {
             const sum = [...document.querySelectorAll('span.productTotal')].reduce((acc, valueSpan) => {
-                return acc + parseFloat(valueSpan.innerHTML)
+                return acc + parseInt(valueSpan.innerHTML)
             }, 0)
-
             document.getElementById("totalPrice").innerHTML = sum;
         }
 

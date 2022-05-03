@@ -10,7 +10,7 @@ $this->title = 'Edit Product';
 <?php $form = app\base\form\Form::begin('', "post") ?>
 <input type="hidden" id="id" name="id" value=<?php echo $model->id?> />
 <?php echo $form->field($model, 'name') ?>
-<?php echo new FloatInputField($model, 'price') ?>
+<?php echo $form->field($model, 'price')->numberField() ?>
 <?php echo $form->field($model, 'category') ?>
 <?php echo $form->field($model, 'image_link') ?>
 <?php echo $form->field($model, 'brand') ?>
