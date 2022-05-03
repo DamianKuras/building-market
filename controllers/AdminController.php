@@ -36,7 +36,7 @@ class AdminController extends Controller
         foreach ($orderItems as $item) {
             $product = new product();
             $productDetails = $product->getById($item['ordered_product_id']);
-            $displayModel = ['name' => $productDetails->name, 'brand' => $productDetails->brand, 'imageLink' => $productDetails->image_link, 'quantity' => $item['quantity'], 'id' => $order->id];
+            $displayModel = ['name' => $productDetails->name, 'brand' => $productDetails->brand, 'image_link' => $productDetails->image_link, 'quantity' => $item['quantity'], 'id' => $order->id];
             $orderedItemsModels[] = $displayModel;
         }
 
