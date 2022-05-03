@@ -31,7 +31,7 @@ $this->title = 'Cart';
                                         </div>
 
                                         <p class="mb-0">Price for one: <span><strong id="summary"><span><?php echo $model['price'] ?></span> $</strong></span></p class="mb-0">
-                                        <p class="mb-0">Total: <span><strong><span class="productTotal"><?php echo number_format($model['price'] * $model['quantity'], 2) ?></span>$</strong></span></p class="mb-0">
+                                        <p class="mb-0">Total: <span><strong><span class="productTotal"><?php echo $model['price'] * $model['quantity'], 2 ?></span>$</strong></span></p class="mb-0">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
