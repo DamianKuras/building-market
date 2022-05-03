@@ -6,7 +6,7 @@ use app\base\form\FloatInputField;
 
 $this->title = 'Edit Product';
 ?>
-<h1> Edytuj </h1>
+<h1> Edit </h1>
 <?php $form = app\base\form\Form::begin('', "post") ?>
 <input type="hidden" id="id" name="id" value=<?php echo $model->id?> />
 <?php echo $form->field($model, 'name') ?>

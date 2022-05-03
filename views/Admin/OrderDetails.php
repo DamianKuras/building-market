@@ -20,7 +20,7 @@ use app\models\Orders;
 
         <div class="cart-item">
             <div class="cart-item-image">
-                <img src="<?php echo $model['imageLink'] ?>" class="cart-item-image" alt="image" />
+                <img src="<?php echo $model['image_link'] ?>" class="cart-item-image" alt="image" />
             </div>
 
             <div class="cart-item-details">

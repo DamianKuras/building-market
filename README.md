@@ -23,9 +23,14 @@ Project is created with:
 * Javascript and AJAX
 
 ## Implemented features
-* Creating user accounts 
+for users
+* Creating user accounts and login in
 * Cart system
-* Contact form
+* Order history
+
+for admin
 * Adding and editing products with admin account
+for all users
 * Input validation
+* responsive design
 
