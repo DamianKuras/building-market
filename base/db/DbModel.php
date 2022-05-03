@@ -109,13 +109,8 @@ abstract class DbModel extends Model
         $attributes = array_keys($where);
         $types = static::types();
         $sql = implode(" OR ", array_map(fn ($attr) => " $attr like CONCAT('%',CAST(:$attr as VARCHAR),'%')", $attributes));
-        file_put_contents("php://stderr", "$tableName \n");
-        file_put_contents("php://stderr", "$sql \n");
         $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
         foreach ($where as $key => $item) {
-            file_put_contents("php://stderr", ":$key \n");
-            file_put_contents("php://stderr", "$item \n");
-            file_put_contents("php://stderr", "$types[$key] \n");
             $statement->bindValue(":$key", $item, $types[$key]);
         }
         $statement->execute();

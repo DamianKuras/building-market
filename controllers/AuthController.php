@@ -152,7 +152,6 @@ class AuthController extends Controller
         $cart->loadData($request->getBody());
         $cart->user_id = Application::$app->user->id;
         $product = new Product;
-        sleep(1);
         $productInfo = $product->getById($cart->product_id);
         if (!$productInfo->verifyQuantity($cart->quantity)) {
             return 'Sorry we dont have this many.';
