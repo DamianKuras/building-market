@@ -68,7 +68,7 @@ class AdminController extends Controller
         if ($request->isPost()) {
             $product->loadData($request->getBody());
             if ($product->validate() && $product->ProductUpdate()) {
-                Application::$app->session->setFlash('succes', 'Succesfully edite product');
+                Application::$app->session->setFlash('succes', 'Succesfully edited product');
                 Application::$app->response->redirect('/admin/get-products-list');
                 exit;
             }
