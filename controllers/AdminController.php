@@ -51,7 +51,7 @@ class AdminController extends Controller
         $order->loadData($request->getBody());
         $order->markAsSended();
         Application::$app->session->setFlash('succes', 'Changed status to sended');
-        Application::$app->response->redirect('/Admin/all-orders-list');
+        Application::$app->response->redirect('/admin/all-orders-list');
         exit;
     }
     public function getProductList()
@@ -90,11 +90,11 @@ class AdminController extends Controller
             $product->loadData($request->getBody());
             if ($product->validate() && $product->save()) {
                 Application::$app->session->setFlash('succes', 'Succefully added product');
-                Application::$app->response->redirect('/Admin/get-product-list');
+                Application::$app->response->redirect('/admin/get-products-list');
                 exit;
             }
 
-            return $this->render('Admin/AddProduct', [
+            return $this->render('admin/addProduct', [
                 'model' => $product
             ]);
         }
