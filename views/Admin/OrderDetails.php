@@ -20,7 +20,11 @@ use app\models\Orders;
 
         <div class="cart-item">
             <div class="cart-item-image">
-                <img src="<?php echo $model['image_link'] ?>" class="cart-item-image" alt="image" />
+                <picture>
+                    <source type="image/webp" srcset="<?php echo $model['image_link'] ?>.webp">
+                    <img src="<?php echo $model['image_link'] ?>.jpg" class="cart-item-image" alt="image" />
+                </picture>
+               
             </div>
 
             <div class="cart-item-details">
