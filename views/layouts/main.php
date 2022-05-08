@@ -12,7 +12,6 @@ use app\base\Application;
     <meta name="author" content="Damian Kuraś">
     <link rel="stylesheet" href="/css/style.css">
     <title><?php echo $this->title ?></title>
-    <script src="https://kit.fontawesome.com/e4e6c7b251.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="icon" href="/assets/favicon.ico">
@@ -41,7 +40,9 @@ use app\base\Application;
                     <div class="input-group">
                         <input type="search" name="searchText" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-search"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                            </svg>
                         </button>
                     </div>
 
@@ -53,12 +54,14 @@ use app\base\Application;
                     <?php elseif (Application::isAdmin()) : ?>
                         <div class="dropdown">
                             <a href="#" class="btn btn-outline-light text-decoration-none dropdown-toggle me-2" id="dropdown2" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-user"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                </svg>
                             </a>
                             <ul class="dropdown-menu text-small" aria-labelledby="dropdown2" style="">
-                            <li><a class="dropdown-item" href="/admin/all-order-list">Orders</a></li>
-                            <li><a class="dropdown-item" href="/admin/get-products-list">Producs List</a></li>
-                            <li><a class="dropdown-item" href="/admin/add-product">Add Products</a></li>
+                                <li><a class="dropdown-item" href="/admin/all-order-list">Orders</a></li>
+                                <li><a class="dropdown-item" href="/admin/get-products-list">Producs List</a></li>
+                                <li><a class="dropdown-item" href="/admin/add-product">Add Products</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -70,7 +73,9 @@ use app\base\Application;
                             <a class="btn btn-outline-light me-2" href="/cart">Cart</a>
                             <div class="dropdown">
                                 <a href="#" class="btn btn-outline-light text-decoration-none dropdown-toggle me-2" id="dropdown1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-user"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                    </svg>
                                 </a>
                                 <ul class="dropdown-menu text-small" aria-labelledby="dropdown1" style="">
                                     <li><a class="dropdown-item" href="/shoping-history">Orders</a></li>
