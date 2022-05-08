@@ -16,7 +16,7 @@ $this->title = 'Products';
                 <div class="card h-100">
                     <picture>
                         <source type="image/webp" srcset="<?php echo $model['image_link'] ?>.webp">
-                        <img class="card-img-top h-100" src="<?php echo $model['image_link'] ?>.jpg" alt="image" />
+                        <img class="card-img-top h-100" src="<?php echo $model['image_link'] ?>.jpg" alt="image" width="350" height="200"/>
                     </picture>
                     
                     <div class="card-body">

@@ -7,7 +7,7 @@ $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
         <div class="col-10 col-sm-8 col-lg-6">
             <picture>
                 <source srcset="/assets/images/pexels-alexander-isreb-1797428.webp" type="image/webp">
-                <img src="/assets/images/pexels-alexander-isreb-1797428.jpg" class="img-fluid mx-auto d-block" alt="hero image">
+                <img src="/assets/images/pexels-alexander-isreb-1797428.jpg" class="img-fluid mx-auto d-block" alt="hero image" width="1278" height="846">
             </picture>
 
 
@@ -32,7 +32,7 @@ $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
                 <div class="card h-100">
                     <picture>
                         <source type="image/webp" srcset="<?php echo $model['image_link'] ?>.webp">
-                        <img class="card-img-top h-100" src="<?php echo $model['image_link'] ?>.jpg" alt="product image" />
+                        <img class="card-img-top h-100" src="<?php echo $model['image_link'] ?>.jpg" alt="product image" width="350" height="200"/>
                     </picture>
 
                     <div class="card-body">
