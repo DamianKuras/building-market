@@ -13,7 +13,7 @@ $this->title = 'Cart';
                             <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
                                 <picture>
                                     <source type="image/webp" srcset="<?php echo $model['imageLink'] ?>.webp">
-                                    <img class="img-fluid w-100" src="<?php echo $model['imageLink'] ?>.jpg " alt="Product Image">
+                                    <img class="img-fluid w-100" src="<?php echo $model['imageLink'] ?>.jpg " alt="Product Image" width="350" height="200">
                                 </picture>
 
                             </div>

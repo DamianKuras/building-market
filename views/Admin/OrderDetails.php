@@ -22,7 +22,7 @@ use app\models\Orders;
             <div class="cart-item-image">
                 <picture>
                     <source type="image/webp" srcset="<?php echo $model['image_link'] ?>.webp">
-                    <img src="<?php echo $model['image_link'] ?>.jpg" class="cart-item-image" alt="image" />
+                    <img src="<?php echo $model['image_link'] ?>.jpg" class="cart-item-image" alt="product image" width="350" height="200"/>
                 </picture>
                
             </div>
