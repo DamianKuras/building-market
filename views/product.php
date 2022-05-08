@@ -3,7 +3,7 @@ $this->title = "$model->name";
 $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
 ?>
 <div class="row">
-  <div class="col-md-6 mb-4">
+  <div class="col-md-4 mb-4">
     <picture>
       <source type="image/webp" srcset="<?php echo $model->image_link ?>.webp">
       <img src="<?php echo $model->image_link ?>.jpg" class="d-block w-100" alt="product image" width="350" height="200">
