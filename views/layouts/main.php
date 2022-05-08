@@ -41,7 +41,9 @@ use app\base\Application;
                     <div class="input-group">
                         <input type="search" name="searchText" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-search"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
                         </button>
                     </div>
 
@@ -56,9 +58,9 @@ use app\base\Application;
                                 <i class="fas fa-user"></i>
                             </a>
                             <ul class="dropdown-menu text-small" aria-labelledby="dropdown2" style="">
-                            <li><a class="dropdown-item" href="/admin/all-order-list">Orders</a></li>
-                            <li><a class="dropdown-item" href="/admin/get-products-list">Producs List</a></li>
-                            <li><a class="dropdown-item" href="/admin/add-product">Add Products</a></li>
+                                <li><a class="dropdown-item" href="/admin/all-order-list">Orders</a></li>
+                                <li><a class="dropdown-item" href="/admin/get-products-list">Producs List</a></li>
+                                <li><a class="dropdown-item" href="/admin/add-product">Add Products</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
